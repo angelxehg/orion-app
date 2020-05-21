@@ -55,7 +55,7 @@ ROOT_URLCONF = 'orion_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": ["orion_app/templates/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
