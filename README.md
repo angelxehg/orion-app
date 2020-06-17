@@ -10,3 +10,7 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 - [ ]  Crear plataforma Backend
 - [ ]  Crear interface de usuario
 - [ ]  Desplegar aplicación
+
+## Operación
+
+Para iniciar el servidor Django usar `python manage.py runserver`
