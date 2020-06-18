@@ -1,15 +1,15 @@
 sequenceDiagram
-    Title: D07. Secuencia Canales
+    Title: D8. Secuencia Búsqueda
     participant User as Usuario
     participant WebApp as Aplicación Web
     participant API as API Gateway
     participant AuthC as Auth Controller
-    participant ChannelC as Channel Controller
+    participant SearchC as Search Controller
     participant DjangoORM as Django ORM
     participant MySQLDB as MySQL Database
-    User->>+WebApp: Presiona Crear Canal
+    User->>+WebApp: Presiona Buscar
     WebApp-->>User: Muestra formulario
-    User->>WebApp: Presiona botón Invitar
+    User->>WebApp: Presiona botón Buscar
     WebApp->>+API: Enviar HTTP Request
     API->>+AuthC: ¿Es valido el token?
     alt es válido
@@ -18,19 +18,23 @@ sequenceDiagram
         AuthC-->>-API: Token inválido
         API-->>WebApp: HTTP Error Response
     end
-    API->>+ChannelC: ¿Son validos los datos de entrada?
+    API->>+SearchC: ¿Son validos los datos de entrada?
     alt datos válidos
-        ChannelC-->>API: Datos válidos   
+        SearchC-->>API: Datos válidos   
     else datos incorrectos
-        ChannelC-->>-API: Datos incorrectos
+        SearchC-->>-API: Datos incorrectos
         API-->>WebApp: Devolver respuesta Error
         WebApp-->>User: Mostrar mensaje Error
     end
-    API->>+ChannelC: Solicitar registro de nuevo Canal
-    ChannelC->>+DjangoORM: Guardar canal en Base de Datos
-    DjangoORM->>+MySQLDB: SQL Query (INSERT)
+    API->>+SearchC: Solicitar búsqueda avanzada
+    SearchC->>+DjangoORM: Solicitar lista Mensajes
+    DjangoORM->>+MySQLDB: SQL Query (SELECT)
+    MySQLDB-->>DjangoORM: SQL Query Result
+    DjangoORM-->>SearchC: Devolver lista en Cache
+    SearchC->>DjangoORM: Solicitar lista Canales
+    DjangoORM->>MySQLDB: SQL Query (SELECT)
     MySQLDB-->>-DjangoORM: SQL Query Result
-    DjangoORM-->>-ChannelC: Devolver objeto Mensaje
-    ChannelC-->>-API: Devolver objeto Canal
+    DjangoORM-->>-SearchC: Devolver lista en Cache
+    SearchC-->>-API: Devolver lista filtrada
     API-->>-WebApp: Devolver respuesta JSON
-    WebApp-->>-User: Muestra detalles de Canal
+    WebApp-->>-User: Muestra lista resultados
