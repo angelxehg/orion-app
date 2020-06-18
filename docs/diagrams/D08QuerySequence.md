@@ -1,0 +1,44 @@
+# D08. Secuencia Búsqueda
+
+```mermaid
+sequenceDiagram
+    Title: D08. Secuencia Búsqueda
+    participant User as Usuario
+    participant WebApp as Aplicación Web
+    participant API as API Gateway
+    participant AuthC as Auth Controller
+    participant SearchC as Search Controller
+    participant DjangoORM as Django ORM
+    participant MySQLDB as MySQL Database
+    User->>+WebApp: Presiona Buscar
+    WebApp-->>User: Muestra formulario
+    User->>WebApp: Presiona botón Buscar
+    WebApp->>+API: Enviar HTTP Request
+    API->>+AuthC: ¿Es valido el token?
+    alt es válido
+        AuthC-->>API: Token válido   
+    else no es válido
+        AuthC-->>-API: Token inválido
+        API-->>WebApp: HTTP Error Response
+    end
+    API->>+SearchC: ¿Son validos los datos de entrada?
+    alt datos válidos
+        SearchC-->>API: Datos válidos   
+    else datos incorrectos
+        SearchC-->>-API: Datos incorrectos
+        API-->>WebApp: Devolver respuesta Error
+        WebApp-->>User: Mostrar mensaje Error
+    end
+    API->>+SearchC: Solicitar búsqueda avanzada
+    SearchC->>+DjangoORM: Solicitar lista Mensajes
+    DjangoORM->>+MySQLDB: SQL Query (SELECT)
+    MySQLDB-->>DjangoORM: SQL Query Result
+    DjangoORM-->>SearchC: Devolver lista en Cache
+    SearchC->>DjangoORM: Solicitar lista Canales
+    DjangoORM->>MySQLDB: SQL Query (SELECT)
+    MySQLDB-->>-DjangoORM: SQL Query Result
+    DjangoORM-->>-SearchC: Devolver lista en Cache
+    SearchC-->>-API: Devolver lista filtrada
+    API-->>-WebApp: Devolver respuesta JSON
+    WebApp-->>-User: Muestra lista resultados
+```
