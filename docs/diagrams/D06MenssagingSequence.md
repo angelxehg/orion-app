@@ -2,14 +2,42 @@
 
 ```mermaid
 sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
+    Title: D06. Secuencia Mensajería
+    participant User as Usuario
+    participant WebApp as Aplicación Web
+    participant API as API Gateway
+    participant AuthC as Auth Controller
+    participant MsgC as Msg Controller
+    participant WebS as WebSocket
+    participant DjangoORM as Django ORM
+    participant MySQLDB as MySQL Database
+    User->>+WebApp: Presiona Escribir mensaje
+    WebApp-->>User: Muestra formulario
+    User->>WebApp: Presiona botón Invitar
+    WebApp->>+API: Enviar HTTP Request
+    API->>+AuthC: ¿Es valido el token?
+    alt es válido
+        AuthC-->>API: Token válido   
+    else no es válido
+        AuthC-->>-API: Token inválido
+        API-->>WebApp: HTTP Error Response
     end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
+    API->>+MsgC: ¿Son validos los datos de entrada?
+    alt datos válidos
+        MsgC-->>API: Datos válidos   
+    else datos incorrectos
+        MsgC-->>-API: Datos incorrectos
+        API-->>WebApp: Devolver respuesta Error
+        WebApp-->>User: Mostrar mensaje Error
+    end
+    API->>+MsgC: Solicitar guardar nuevo mensaje
+    MsgC->>+DjangoORM: Guardar mensaje en Base de Datos
+    DjangoORM->>+MySQLDB: SQL Query (INSERT)
+    MySQLDB-->>-DjangoORM: SQL Query Result
+    DjangoORM-->>-MsgC: Devolver objeto Mensaje
+    MsgC->>+WebS: Enviar mensaje a canal
+    WebS-->>-MsgC: Mensaje enviado
+    MsgC-->>-API: Devolver objeto Mensaje
+    API-->>-WebApp: Devolver respuesta JSON
+    WebApp-->>-User: Muestra chat actualizado
 ```
