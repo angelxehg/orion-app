@@ -1,6 +1,3 @@
-# D03. Secuencia Consulta API
-
-```mermaid
 sequenceDiagram
 	Title: D03. Secuencia Consulta API
     participant User as Usuario
@@ -24,4 +21,3 @@ sequenceDiagram
     DjangoORM-->>-ChannelController: Devuelve lista de objetos
     ChannelController-->>-APIGateway: Devuelve objeto en formato JSON
     APIGateway-->>-User: HTTP JSON Response
-```
