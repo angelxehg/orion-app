@@ -1,6 +1,6 @@
-# Orion ECS
+# Orion ECS CMD
 
-Orion Effective Communications System
+Orion Effective Communications System Command Module
 
 ## Objetivos
 
