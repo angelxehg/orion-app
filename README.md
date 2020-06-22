@@ -14,3 +14,8 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 ## Operación
 
 Para iniciar el servidor Django usar `python manage.py runserver`
+
+## Documentation
+
+- [API](./docs/api)
+- [Diagrams](./docs/diagrams)
