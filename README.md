@@ -13,11 +13,13 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 
 ## Operación
 
-Para iniciar el servidor Django usar `python manage.py runserver`
+Para crear un entorno virtual `python3 -m virtualenv .envs/base-env/`
 
 Para migrar las bases de datos usar `python manage.py migrate`
 
 Para crear super usuario usar `python manage.py createsuperuser`
+
+Para iniciar el servidor Django usar `python manage.py runserver`
 
 ## Documentation
 
