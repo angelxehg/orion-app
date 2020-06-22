@@ -1,0 +1,40 @@
+sequenceDiagram
+    Title: D5. Secuencia Organización
+    participant User as Usuario
+    participant WebApp as Aplicación Web
+    participant API as API Gateway
+    participant AuthC as Auth Controller
+    participant OrgC as Org Controller
+    participant DjangoORM as Django ORM
+    participant MySQLDB as MySQL Database
+    User->>+WebApp: Presiona Añadir Integrante
+    WebApp-->>User: Muestra formulario
+    User->>WebApp: Presiona botón Invitar
+    WebApp->>+API: Enviar HTTP Request
+    API->>+AuthC: ¿Es valido el token?
+    alt es válido
+        AuthC-->>API: Token válido   
+    else no es válido
+        AuthC-->>-API: Token inválido
+        API-->>WebApp: HTTP Error Response
+    end
+    API->>+OrgC: ¿Son validos los datos de entrada?
+    alt datos válidos
+        OrgC-->>API: Datos válidos   
+    else datos incorrectos
+        OrgC-->>-API: Datos incorrectos
+        API-->>WebApp: Devolver respuesta Error
+        WebApp-->>User: Mostrar mensaje Error
+    end
+    API->>+OrgC: Solicitar registro de Usuario en Organización
+    OrgC->>+DjangoORM: Solicitar lista de integrantes
+    DjangoORM->>+MySQLDB: SQL Query (SELECT)
+    MySQLDB-->>DjangoORM: SQL Query Result
+    DjangoORM-->>OrgC: Devolver lista de integrantes
+    OrgC->>DjangoORM: Guardar lista actualizada
+    DjangoORM->>MySQLDB: SQL Query (UPDATE)
+    MySQLDB-->>-DjangoORM: SQL Query Result
+    DjangoORM-->>-OrgC: Devolver objeto actualizado
+    OrgC-->>-API: Devolver lista de integrantes actualizada
+    API-->>-WebApp: Devolver respuesta JSON
+    WebApp-->>-User: Muestra lista actualizada
