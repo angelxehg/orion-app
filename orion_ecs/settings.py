@@ -25,7 +25,7 @@ SECRET_KEY = '-y*bxk%c=8d7j13(*3h3%o+*%ez6t!3y7_wwfzhiw_%aioi9+s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'vaio.home.com']
 
 
 # Application definition
