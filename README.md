@@ -15,6 +15,10 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 
 Para iniciar el servidor Django usar `python manage.py runserver`
 
+Para migrar las bases de datos usar `python manage.py migrate`
+
+Para crear super usuario usar `python manage.py createsuperuser`
+
 ## Documentation
 
 - [API](./docs/api)
