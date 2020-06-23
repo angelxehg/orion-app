@@ -24,8 +24,3 @@ Para migrar las bases de datos usar `python manage.py migrate`
 Para crear super usuario usar `python manage.py createsuperuser`
 
 Para iniciar el servidor Django usar `python manage.py runserver` o `python manage.py runserver 0.0.0.0:8000`
-
-## Documentation
-
-- [API](./docs/api)
-- [Diagrams](./docs/diagrams)
