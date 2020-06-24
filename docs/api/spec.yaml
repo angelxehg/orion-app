@@ -25,7 +25,7 @@ paths:
       description: Returns the options for organization
       operationId: optionOrganizationList
       tags:
-        - organization
+        - organizations
       parameters: []
       responses:
         "200":
@@ -42,7 +42,7 @@ paths:
       description: Returns a list of all organizations
       operationId: listOrganizations
       tags:
-        - organization
+        - organizations
       parameters: []
       responses:
         "200":
@@ -56,7 +56,7 @@ paths:
       description: Creates and stores a new organization
       operationId: storeOrganization
       tags:
-        - organization
+        - organizations
       parameters: []
       requestBody:
         $ref: "#/components/requestBodies/OrganizationRequest"
@@ -84,7 +84,7 @@ paths:
       description: Returns the options for organization model
       operationId: optionOrganization
       tags:
-        - organization
+        - organizations
       parameters: []
       responses:
         "200":
@@ -101,7 +101,7 @@ paths:
       description: Returns the data of an organization
       operationId: getOrganization
       tags:
-        - organization
+        - organizations
       parameters: []
       responses:
         "200":
@@ -115,7 +115,7 @@ paths:
       description: Updates organization data
       operationId: updateOrganization
       tags:
-        - organization
+        - organizations
       parameters: []
       requestBody:
         $ref: "#/components/requestBodies/OrganizationRequest"
@@ -131,11 +131,130 @@ paths:
       description: Deletes an organization
       operationId: deleteOrganization
       tags:
-        - organization
+        - organizations
       parameters: []
       responses:
         "204":
           description: Deleted organization
+  "/users/":
+    summary: Represents a list of Users
+    description: This resource path represents an User in the platform
+    options:
+      summary: List user options
+      description: Returns the options for user
+      operationId: optionUserList
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of user options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all users
+      description: Returns a list of all users
+      operationId: listUsers
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    post:
+      summary: Create an user
+      description: Creates and stores a new user
+      operationId: storeUser
+      tags:
+        - users
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/UserRequest"
+      responses:
+        "201":
+          description: Stored an User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  "/users/{id}/":
+    summary: Represents a list of Users
+    description: This resource path represents an User in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of user
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an user options
+      description: Returns the options for user model
+      operationId: optionUser
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of an user options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an user
+      description: Returns the data of an user
+      operationId: getUser
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: Data of an user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      summary: Update an user
+      description: Updates user data
+      operationId: updateUser
+      tags:
+        - users
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/UserRequest"
+      responses:
+        "200":
+          description: Updated an User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      summary: Delete an user
+      description: Deletes an user
+      operationId: deleteUser
+      tags:
+        - users
+      parameters: []
+      responses:
+        "204":
+          description: Deleted user
 components:
   schemas:
     Organization:
@@ -155,6 +274,23 @@ components:
           type: string
       example:
         name: Nova Organization
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova User
+    UserForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova User
     HTTPOption:
       type: object
       required:
@@ -181,6 +317,19 @@ components:
         multipart/form-data:
           schema:
             $ref: "#/components/schemas/OrganizationForm"
+    UserRequest:
+      description: Request body for an user
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/UserForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/UserForm"
   examples:
     listOptionExample:
       summary: Example of List Options
