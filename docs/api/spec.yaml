@@ -255,6 +255,601 @@ paths:
       responses:
         "204":
           description: Deleted user
+  "/workspaces/":
+    summary: Represents a list of Workspaces
+    description: This resource path represents a Workspace in the platform
+    options:
+      summary: List workspace options
+      description: Returns the options for workspace
+      operationId: optionWorkspaceList
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: List of workspace options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all workspaces
+      description: Returns a list of all workspaces
+      operationId: listWorkspaces
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: List of all workspaces
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    post:
+      summary: Create an workspace
+      description: Creates and stores a new workspace
+      operationId: storeWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/WorkspaceRequest"
+      responses:
+        "201":
+          description: Stored a Workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+  "/workspaces/{id}/":
+    summary: Represents a list of Workspaces
+    description: This resource path represents a Workspace in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of workspace
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an workspace options
+      description: Returns the options for workspace model
+      operationId: optionWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: List of an workspace options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an workspace
+      description: Returns the data of an workspace
+      operationId: getWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: Data of an workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    put:
+      summary: Update an workspace
+      description: Updates workspace data
+      operationId: updateWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/WorkspaceRequest"
+      responses:
+        "200":
+          description: Updated a Workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    delete:
+      summary: Delete an workspace
+      description: Deletes an workspace
+      operationId: deleteWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "204":
+          description: Deleted workspace
+  "/groups/":
+    summary: Represents a list of Groups
+    description: This resource path represents a Group in the platform
+    options:
+      summary: List group options
+      description: Returns the options for group
+      operationId: optionGroupList
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: List of group options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all groups
+      description: Returns a list of all groups
+      operationId: listGroups
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: List of all groups
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    post:
+      summary: Create an group
+      description: Creates and stores a new group
+      operationId: storeGroup
+      tags:
+        - groups
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/GroupRequest"
+      responses:
+        "201":
+          description: Stored a Group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+  "/groups/{id}/":
+    summary: Represents a list of Groups
+    description: This resource path represents a Group in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of group
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an group options
+      description: Returns the options for group model
+      operationId: optionGroup
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: List of an group options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an group
+      description: Returns the data of an group
+      operationId: getGroup
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: Data of an group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    put:
+      summary: Update an group
+      description: Updates group data
+      operationId: updateGroup
+      tags:
+        - groups
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/GroupRequest"
+      responses:
+        "200":
+          description: Updated a Group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    delete:
+      summary: Delete an group
+      description: Deletes an group
+      operationId: deleteGroup
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "204":
+          description: Deleted group
+  "/channels/":
+    summary: Represents a list of Channels
+    description: This resource path represents a Channel in the platform
+    options:
+      summary: List channel options
+      description: Returns the options for channel
+      operationId: optionChannelList
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: List of channel options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all channels
+      description: Returns a list of all channels
+      operationId: listChannels
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: List of all channels
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+    post:
+      summary: Create an channel
+      description: Creates and stores a new channel
+      operationId: storeChannel
+      tags:
+        - channels
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/ChannelRequest"
+      responses:
+        "201":
+          description: Stored a Channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+  "/channels/{id}/":
+    summary: Represents a list of Channels
+    description: This resource path represents a Channel in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of channel
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an channel options
+      description: Returns the options for channel model
+      operationId: optionChannel
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: List of an channel options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an channel
+      description: Returns the data of an channel
+      operationId: getChannel
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: Data of an channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+    put:
+      summary: Update an channel
+      description: Updates channel data
+      operationId: updateChannel
+      tags:
+        - channels
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/ChannelRequest"
+      responses:
+        "200":
+          description: Updated a Channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+    delete:
+      summary: Delete an channel
+      description: Deletes an channel
+      operationId: deleteChannel
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "204":
+          description: Deleted channel
+  "/messages/":
+    summary: Represents a list of Messages
+    description: This resource path represents a Message in the platform
+    options:
+      summary: List message options
+      description: Returns the options for message
+      operationId: optionMessageList
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: List of message options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all messages
+      description: Returns a list of all messages
+      operationId: listMessages
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: List of all messages
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    post:
+      summary: Create an message
+      description: Creates and stores a new message
+      operationId: storeMessage
+      tags:
+        - messages
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/MessageRequest"
+      responses:
+        "201":
+          description: Stored a Message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/messages/{id}/":
+    summary: Represents a list of Messages
+    description: This resource path represents a Message in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of message
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an message options
+      description: Returns the options for message model
+      operationId: optionMessage
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: List of an message options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an message
+      description: Returns the data of an message
+      operationId: getMessage
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: Data of an message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    put:
+      summary: Update an message
+      description: Updates message data
+      operationId: updateMessage
+      tags:
+        - messages
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/MessageRequest"
+      responses:
+        "200":
+          description: Updated a Message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    delete:
+      summary: Delete an message
+      description: Deletes an message
+      operationId: deleteMessage
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "204":
+          description: Deleted message
+  "/attachments/":
+    summary: Represents a list of Attachments
+    description: This resource path represents an Attachment in the platform
+    options:
+      summary: List attachment options
+      description: Returns the options for attachment
+      operationId: optionAttachmentList
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: List of attachment options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all attachments
+      description: Returns a list of all attachments
+      operationId: listAttachments
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: List of all attachments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+    post:
+      summary: Create an attachment
+      description: Creates and stores a new attachment
+      operationId: storeAttachment
+      tags:
+        - attachments
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/AttachmentRequest"
+      responses:
+        "201":
+          description: Stored an Attachment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+  "/attachments/{id}/":
+    summary: Represents a list of Attachments
+    description: This resource path represents an Attachment in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of attachment
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an attachment options
+      description: Returns the options for attachment model
+      operationId: optionAttachment
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: List of an attachment options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an attachment
+      description: Returns the data of an attachment
+      operationId: getAttachment
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: Data of an attachment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+    put:
+      summary: Update an attachment
+      description: Updates attachment data
+      operationId: updateAttachment
+      tags:
+        - attachments
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/AttachmentRequest"
+      responses:
+        "200":
+          description: Updated an Attachment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+    delete:
+      summary: Delete an attachment
+      description: Deletes an attachment
+      operationId: deleteAttachment
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "204":
+          description: Deleted attachment
 components:
   schemas:
     Organization:
@@ -291,6 +886,91 @@ components:
           type: string
       example:
         name: Nova User
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Workspace
+    WorkspaceForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Workspace
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Group
+    GroupForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Group
+    Channel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Channel
+    ChannelForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Channel
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Message
+    MessageForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Message
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Novan Attachment
+    AttachmentForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Novan Attachment
     HTTPOption:
       type: object
       required:
@@ -330,6 +1010,71 @@ components:
         multipart/form-data:
           schema:
             $ref: "#/components/schemas/UserForm"
+    WorkspaceRequest:
+      description: Request body for an workspace
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/WorkspaceForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/WorkspaceForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/WorkspaceForm"
+    GroupRequest:
+      description: Request body for an group
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GroupForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/GroupForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/GroupForm"
+    ChannelRequest:
+      description: Request body for an channel
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ChannelForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/ChannelForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/ChannelForm"
+    MessageRequest:
+      description: Request body for an message
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MessageForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/MessageForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/MessageForm"
+    AttachmentRequest:
+      description: Request body for an attachment
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AttachmentForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/AttachmentForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/AttachmentForm"
   examples:
     listOptionExample:
       summary: Example of List Options
