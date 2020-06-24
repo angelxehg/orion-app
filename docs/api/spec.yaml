@@ -17,7 +17,7 @@ servers:
   - url: "https://127.0.0.1:8000/api/v1"
     description: Local development
 paths:
-  "/organization/":
+  "/organizations/":
     summary: Represents a list of Organizations
     description: This resource path represents an Organization in the platform
     options:
@@ -67,7 +67,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Organization"
-  "/organization/{id}/":
+  "/organizations/{id}/":
     summary: Represents a list of Organizations
     description: This resource path represents an Organization in the platform
     parameters:
