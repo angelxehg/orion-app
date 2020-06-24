@@ -3,72 +3,81 @@ info:
   version: 0.6.0
   title: Orion ECS
   description: The public API specification for Orion ECS Command Module
-  termsOfService: ''
+  termsOfService: ""
   contact:
     name: Angel Hurtado
     email: contact@angelxehg.com
-    url: 'http://angelxehg.com'
+    url: "http://angelxehg.com"
   license:
     name: MIT
-    url: 'https://opensource.org/licenses/MIT'
+    url: "https://opensource.org/licenses/MIT"
 servers:
-  - url: 'https://orion-ecs-api.herokuapp.com/api/v1'
+  - url: "https://orion-ecs-api.herokuapp.com/api/v1"
     description: Main Heroku Deployment
-  - url: 'https://127.0.0.1:8000/api/v1'
+  - url: "https://127.0.0.1:8000/api/v1"
     description: Local development
 paths:
-  '/organization':
-    # Meta of resource
+  "/organization/":
     summary: Represents a list of Organizations
     description: This resource path represents an Organization in the platform
-    # Operations
     options:
-      # Meta of operation
       summary: List organization options
       description: Returns the options for organization
       operationId: optionRoot
       tags:
         - organization
-      # Parameters of operation
       parameters: []
-      # Responses of operation
       responses:
-        '200':
-          # Meta of response
+        "200":
           description: List of organization options
-          # Content of response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPOption'
+                $ref: "#/components/schemas/HTTPOption"
     get:
-      # Meta of operation
       summary: List all organizations
       description: Returns a list of all organizations
       operationId: listOrganizations
       tags:
         - organization
-      # Parameters of operation
       parameters: []
-      # Responses of operation
       responses:
-        '200':
-          # Meta of response
+        "200":
           description: List of all organizations
-          # Content of response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Organization'
+                $ref: "#/components/schemas/Organization"
+    post:
+      summary: Create an organization
+      description: Creates and stores a new organization
+      operationId: storeOrganization
+      tags:
+        - organization
+      parameters: []
+      requestBody:
+        description: Request body for an organization
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Organization"
+      responses:
+        "201":
+          description: Stored an Organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
 components:
   schemas:
     Organization:
-      allOf:
-        - type: object
-          properties:
-            organization:
-              type: string
-              example: "http://127.0.0.1:8000/api/v1/organization/"
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
     HTTPOption:
       type: object
       required:
