@@ -64,6 +64,57 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Organization"
+  "/organization/{id}/":
+    summary: Represents a list of Organizations
+    description: This resource path represents an Organization in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Get an organization
+      description: Returns the data of an organization
+      operationId: getOrganization
+      tags:
+        - organization
+      parameters: []
+      responses:
+        "200":
+          description: Data of an organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+    put:
+      summary: Update an organization
+      description: Updates organization data
+      operationId: updateOrganization
+      tags:
+        - organization
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/OrganizationRequest"
+      responses:
+        "200":
+          description: Updated an Organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+    delete:
+      summary: Delete an organization
+      description: Deletes an organization
+      operationId: deleteOrganization
+      tags:
+        - organization
+      parameters: []
+      responses:
+        "204":
+          description: Deleted organization
 components:
   schemas:
     Organization:
