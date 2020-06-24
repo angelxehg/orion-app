@@ -23,7 +23,7 @@ paths:
     options:
       summary: List organization options
       description: Returns the options for organization
-      operationId: optionRoot
+      operationId: optionOrganizationList
       tags:
         - organization
       parameters: []
@@ -35,8 +35,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/HTTPOption"
               examples:
-                optionExample:
-                  $ref: "#/components/examples/optionExample"
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
     get:
       summary: List all organizations
       description: Returns a list of all organizations
@@ -79,6 +79,23 @@ paths:
           type: integer
           format: int64
           example: 1
+    options:
+      summary: List an organization options
+      description: Returns the options for organization model
+      operationId: optionOrganization
+      tags:
+        - organization
+      parameters: []
+      responses:
+        "200":
+          description: List of an organization options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
     get:
       summary: Get an organization
       description: Returns the data of an organization
@@ -165,11 +182,11 @@ components:
           schema:
             $ref: "#/components/schemas/OrganizationForm"
   examples:
-    optionExample:
-      summary: Example of Options
+    listOptionExample:
+      summary: Example of List Options
       value:
-        name: Organization Viewset List
-        description: Organization Model view set
+        name: Model Viewset List
+        description: Model view set
         renders:
           - "application/json"
           - "text/html"
@@ -179,6 +196,31 @@ components:
           - "multipart/form-data"
         actions:
           POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            name:
+              type: string
+              required: true
+              read_only: false
+              label: Name
+              max_length: 100
+    modelOptionExample:
+      summary: Example of Model Options
+      value:
+        name: Model Viewset Instance
+        description: Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          PUT:
             id:
               type: integer
               required: false
