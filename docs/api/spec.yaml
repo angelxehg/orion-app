@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  version: 0.6.0
+  title: Orion ECS
+  description: The public API specification for Orion ECS Command Module
+  termsOfService: ''
+  contact:
+    name: Angel Hurtado
+    email: contact@angelxehg.com
+    url: 'http://angelxehg.com'
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+servers:
+  - url: 'https://orion-ecs-api.herokuapp.com/api/v1'
+    description: Main Heroku Deployment
+  - url: 'https://127.0.0.1:8000/api/v1'
+    description: Local development
+paths:
+  '/organization':
+    # Meta of resource
+    summary: Represents a list of Organizations
+    description: This resource path represents an Organization in the platform
+    # Operations
+    options:
+      # Meta of operation
+      summary: List organization options
+      description: Returns the options for organization
+      operationId: optionRoot
+      tags:
+        - organization
+      # Parameters of operation
+      parameters: []
+      # Responses of operation
+      responses:
+        '200':
+          # Meta of response
+          description: List of organization options
+          # Content of response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPOption'
+    get:
+      # Meta of operation
+      summary: List all organizations
+      description: Returns a list of all organizations
+      operationId: listOrganizations
+      tags:
+        - organization
+      # Parameters of operation
+      parameters: []
+      # Responses of operation
+      responses:
+        '200':
+          # Meta of response
+          description: List of all organizations
+          # Content of response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Organization'
+components:
+  schemas:
+    Organization:
+      allOf:
+        - type: object
+          properties:
+            organization:
+              type: string
+              example: "http://127.0.0.1:8000/api/v1/organization/"
+    HTTPOption:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          example: Option List
+        description:
+          type: string
+          example: Model view set
+  links: {}
+  callbacks: {}
+security: []
