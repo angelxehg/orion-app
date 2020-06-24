@@ -34,6 +34,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPOption"
+              examples:
+                optionExample:
+                  $ref: "#/components/examples/optionExample"
     get:
       summary: List all organizations
       description: Returns a list of all organizations
@@ -75,6 +78,7 @@ paths:
         schema:
           type: integer
           format: int64
+          example: 1
     get:
       summary: Get an organization
       description: Returns the data of an organization
@@ -124,11 +128,16 @@ components:
           type: integer
         name:
           type: string
+      example:
+        id: 1
+        name: Nova Organization
     OrganizationForm:
       type: object
       properties:
         name:
           type: string
+      example:
+        name: Nova Organization
     HTTPOption:
       type: object
       required:
@@ -149,15 +158,38 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/OrganizationForm"
-        application/xml:
-          schema:
-            $ref: "#/components/schemas/OrganizationForm"
         application/x-www-form-urlencoded:
           schema:
             $ref: "#/components/schemas/OrganizationForm"
         multipart/form-data:
           schema:
             $ref: "#/components/schemas/OrganizationForm"
+  examples:
+    optionExample:
+      summary: Example of Options
+      value:
+        name: Organization Viewset List
+        description: Organization Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            name:
+              type: string
+              required: true
+              read_only: false
+              label: Name
+              max_length: 100
   links: {}
   callbacks: {}
 security: []
