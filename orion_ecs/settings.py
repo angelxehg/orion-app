@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rental',
     'workspaces',
-    'messages',
-    'search'
+    # 'messages',
+    # 'search'
 ]
 
 MIDDLEWARE = [

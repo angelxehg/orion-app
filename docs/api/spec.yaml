@@ -36,7 +36,7 @@ paths:
                 $ref: "#/components/schemas/HTTPOption"
               examples:
                 listOptionExample:
-                  $ref: "#/components/examples/listOptionExample"
+                  $ref: "#/components/examples/OrganizationOptionListExample"
     get:
       summary: List all organizations
       description: Returns a list of all organizations
@@ -50,7 +50,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Organization"
+                $ref: "#/components/schemas/OrganizationList"
     post:
       summary: Create an organization
       description: Creates and stores a new organization
@@ -95,7 +95,7 @@ paths:
                 $ref: "#/components/schemas/HTTPOption"
               examples:
                 listOptionExample:
-                  $ref: "#/components/examples/modelOptionExample"
+                  $ref: "#/components/examples/OrganizationOptionExample"
     get:
       summary: Get an organization
       description: Returns the data of an organization
@@ -857,18 +857,37 @@ components:
       properties:
         id:
           type: integer
-        name:
+        title:
+          type: string
+        description:
           type: string
       example:
         id: 1
-        name: Nova Organization
+        title: Nova Organization
+        description: We make Nova Software
+    OrganizationList:
+      type: array
+      items:
+        $ref: "#/components/schemas/Organization"
+      example:
+        - id: 1
+          title: Nova Organization
+          description: We make Nova Software
+        - id: 2
+          title: Alpha Organization
+          description: We make Alpha Software
+        - id: 3
+          title: Beta Organization
+          description: We make Beta Software
     OrganizationForm:
       type: object
       properties:
-        name:
+        title:
           type: string
-      example:
-        name: Nova Organization
+          example: Nova Organization
+        description:
+          type: string
+          example: We make Nova Software
     User:
       type: object
       properties:
@@ -1126,6 +1145,68 @@ components:
               read_only: false
               label: Name
               max_length: 100
+    OrganizationOptionListExample:
+      summary: Example of Organization Option List
+      value:
+        name: Organization Viewset List
+        description: Organization Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            title:
+              type: string
+              required: true
+              read_only: false
+              label: Title
+              max_length: 50
+            description:
+              type: string
+              required: false
+              read_only: false
+              label: Description
+              max_length: 1000
+    OrganizationOptionExample:
+      summary: Example of Organization Option
+      value:
+        name: Organization Viewset Instance
+        description: Organization Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          PUT:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            title:
+              type: string
+              required: true
+              read_only: false
+              label: Title
+              max_length: 50
+            description:
+              type: string
+              required: false
+              read_only: false
+              label: Description
+              max_length: 1000
   links: {}
   callbacks: {}
 security: []
