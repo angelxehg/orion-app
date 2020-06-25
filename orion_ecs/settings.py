@@ -25,7 +25,8 @@ SECRET_KEY = '-y*bxk%c=8d7j13(*3h3%o+*%ez6t!3y7_wwfzhiw_%aioi9+s'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'vaio.home.com', '192.168.0.62']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1',
+                 '[::1]', 'vaio.home.com', '192.168.0.62']
 
 
 # Application definition
@@ -40,6 +41,9 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rental',
+    'workspaces',
+    'messages',
+    'search'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +59,7 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_WHITELIST = [
     "http://localhost:8100",  # Ionic Serve
-    "http://localhost" # Ionic Capacitor
+    "http://localhost"  # Ionic Capacitor
 ]
 
 ROOT_URLCONF = 'orion_ecs.urls'
