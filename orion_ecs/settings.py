@@ -40,10 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'rental',
     'workspaces',
-    # 'messages',
-    # 'search'
 ]
 
 MIDDLEWARE = [
