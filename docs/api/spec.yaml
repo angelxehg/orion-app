@@ -17,6 +17,23 @@ servers:
   - url: "https://127.0.0.1:8000/api/v1"
     description: Local development
 paths:
+  "/auth/token/login/":
+    summary: Route to login into the platform
+    description: This is the route where logins are made
+    post:
+      summary: Login into platform
+      tags:
+        - auth
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/LoginRequest"
+      responses:
+        "200":
+          description: Received a token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginToken"
   "/organizations/":
     summary: Represents a list of Organizations
     description: This resource path represents an Organization in the platform
@@ -852,6 +869,22 @@ paths:
           description: Deleted attachment
 components:
   schemas:
+    LoginToken:
+      type: object
+      properties:
+        auth_token:
+          type: string
+      example:
+        auth_token: 1etmk30an6vjjplcd1ou8mnjudub7qgj
+    LoginForm:
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: secret_pass
     Organization:
       type: object
       properties:
@@ -1003,6 +1036,19 @@ components:
           type: string
           example: Model view set
   requestBodies:
+    LoginRequest:
+      description: Request body for login
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
     OrganizationRequest:
       description: Request body for an organization
       required: true
