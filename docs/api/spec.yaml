@@ -17,23 +17,56 @@ servers:
   - url: "https://127.0.0.1:8000/api/v1"
     description: Local development
 paths:
-  "/auth/token/login/":
-    summary: Route to login into the platform
-    description: This is the route where logins are made
+  "/auth/jwt/create/":
     post:
-      summary: Login into platform
+      summary: Create jwt token
+      description: Generates access & refresh jwt tokens
+      operationId: createJWT
       tags:
         - auth
       parameters: []
+      security: []
       requestBody:
         $ref: "#/components/requestBodies/LoginRequest"
       responses:
         "200":
-          description: Received a token
+          description: Received jwt login tokens
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/LoginToken"
+  "/auth/jwt/refresh/":
+    post:
+      summary: Refresh jwt token
+      description: Get a new jwt access token with refresh jwt token
+      operationId: refreshJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/RefreshRequest"
+      responses:
+        "200":
+          description: Received an access jwt token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshToken"
+  "/auth/jwt/verify/":
+    post:
+      summary: Verify jwt token
+      description: Verify any jwt token
+      operationId: verifyJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/VerifyRequest"
+      responses:
+        "200":
+          description: Verified a jwt token
   "/organizations/":
     summary: Represents a list of Organizations
     description: This resource path represents an Organization in the platform
@@ -872,10 +905,22 @@ components:
     LoginToken:
       type: object
       properties:
-        auth_token:
+        access:
+          type: string
+        refresh:
           type: string
       example:
-        auth_token: 1etmk30an6vjjplcd1ou8mnjudub7qgj
+        access: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+        refresh: 1etmk30an6vjjplcd1ou8mnjudub7qgj.refresh
+    RefreshToken:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+      example:
+        access: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
     LoginForm:
       type: object
       properties:
@@ -885,6 +930,18 @@ components:
         password:
           type: string
           example: secret_pass
+    RefreshForm:
+      type: object
+      properties:
+        refresh:
+          type: string
+          example: 1etmk30an6vjjplcd1ou8mnjudub7qgj.refresh
+    VerifyForm:
+      type: object
+      properties:
+        token:
+          type: string
+          example: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
     Organization:
       type: object
       properties:
@@ -1035,6 +1092,11 @@ components:
         description:
           type: string
           example: Model view set
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
   requestBodies:
     LoginRequest:
       description: Request body for login
@@ -1049,6 +1111,32 @@ components:
         multipart/form-data:
           schema:
             $ref: "#/components/schemas/LoginForm"
+    RefreshRequest:
+      description: Request body for refresh
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+    VerifyRequest:
+      description: Request body for verify
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
     OrganizationRequest:
       description: Request body for an organization
       required: true
@@ -1255,4 +1343,5 @@ components:
               max_length: 1000
   links: {}
   callbacks: {}
-security: []
+security:
+  - bearerAuth: [] 
