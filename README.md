@@ -13,9 +13,9 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 
 ## Operación
 
-Para crear un entorno virtual `python -m virtualenv ~/.envs/base-env/`
+Para crear un entorno virtual `python -m virtualenv ~/.virtualenvs/venv-orion/`
 
-Para activar el entorno virtual `. ~/.envs/base-env/bin/activate.fish`
+Para activar el entorno virtual `. ~/.virtualenvs/venv-orion/bin/activate.fish`
 
 Para instalar los paquetes usar `pip install -r requirements.txt`
 

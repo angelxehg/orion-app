@@ -17,6 +17,106 @@ servers:
   - url: "https://127.0.0.1:8000/api/v1"
     description: Local development
 paths:
+  "/auth/jwt/create/":
+    post:
+      summary: Create jwt token
+      description: Generates access & refresh jwt tokens
+      operationId: createJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/LoginRequest"
+      responses:
+        "200":
+          description: Received jwt login tokens
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginToken"
+  "/auth/jwt/refresh/":
+    post:
+      summary: Refresh jwt token
+      description: Get a new jwt access token with refresh jwt token
+      operationId: refreshJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/RefreshRequest"
+      responses:
+        "200":
+          description: Received an access jwt token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshToken"
+  "/auth/jwt/verify/":
+    post:
+      summary: Verify jwt token
+      description: Verify any jwt token
+      operationId: verifyJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/VerifyRequest"
+      responses:
+        "200":
+          description: Verified a jwt token
+  "/auth/users/":
+    summary: Represents a list of Users
+    description: This resource path represents an User in the platform
+    options:
+      summary: List user options
+      description: Returns the options for user
+      operationId: optionUserList
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of user options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/UserOptionListExample"
+    get:
+      summary: List all users
+      description: Returns a list of all users
+      operationId: listUsers
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserList"
+    post:
+      summary: Create an user
+      description: Creates and stores a new user
+      operationId: storeUser
+      tags:
+        - users
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/UserRequest"
+      responses:
+        "201":
+          description: Stored an User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
   "/organizations/":
     summary: Represents a list of Organizations
     description: This resource path represents an Organization in the platform
@@ -136,125 +236,6 @@ paths:
       responses:
         "204":
           description: Deleted organization
-  "/users/":
-    summary: Represents a list of Users
-    description: This resource path represents an User in the platform
-    options:
-      summary: List user options
-      description: Returns the options for user
-      operationId: optionUserList
-      tags:
-        - users
-      parameters: []
-      responses:
-        "200":
-          description: List of user options
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPOption"
-              examples:
-                listOptionExample:
-                  $ref: "#/components/examples/listOptionExample"
-    get:
-      summary: List all users
-      description: Returns a list of all users
-      operationId: listUsers
-      tags:
-        - users
-      parameters: []
-      responses:
-        "200":
-          description: List of all users
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-    post:
-      summary: Create an user
-      description: Creates and stores a new user
-      operationId: storeUser
-      tags:
-        - users
-      parameters: []
-      requestBody:
-        $ref: "#/components/requestBodies/UserRequest"
-      responses:
-        "201":
-          description: Stored an User
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-  "/users/{id}/":
-    summary: Represents a list of Users
-    description: This resource path represents an User in the platform
-    parameters:
-      - name: id
-        in: path
-        description: ID of user
-        required: true
-        schema:
-          type: integer
-          format: int64
-          example: 1
-    options:
-      summary: List an user options
-      description: Returns the options for user model
-      operationId: optionUser
-      tags:
-        - users
-      parameters: []
-      responses:
-        "200":
-          description: List of an user options
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/HTTPOption"
-              examples:
-                listOptionExample:
-                  $ref: "#/components/examples/modelOptionExample"
-    get:
-      summary: Get an user
-      description: Returns the data of an user
-      operationId: getUser
-      tags:
-        - users
-      parameters: []
-      responses:
-        "200":
-          description: Data of an user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-    put:
-      summary: Update an user
-      description: Updates user data
-      operationId: updateUser
-      tags:
-        - users
-      parameters: []
-      requestBody:
-        $ref: "#/components/requestBodies/UserRequest"
-      responses:
-        "200":
-          description: Updated an User
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/User"
-    delete:
-      summary: Delete an user
-      description: Deletes an user
-      operationId: deleteUser
-      tags:
-        - users
-      parameters: []
-      responses:
-        "204":
-          description: Deleted user
   "/workspaces/":
     summary: Represents a list of Workspaces
     description: This resource path represents a Workspace in the platform
@@ -852,6 +833,89 @@ paths:
           description: Deleted attachment
 components:
   schemas:
+    LoginToken:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+      example:
+        access: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+        refresh: 1etmk30an6vjjplcd1ou8mnjudub7qgj.refresh
+    RefreshToken:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+      example:
+        access: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+    LoginForm:
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: secret_pass
+    RefreshForm:
+      type: object
+      properties:
+        refresh:
+          type: string
+          example: 1etmk30an6vjjplcd1ou8mnjudub7qgj.refresh
+    VerifyForm:
+      type: object
+      properties:
+        token:
+          type: string
+          example: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+      example:
+        id: 1
+        username: example
+        email: example@angelxehg.com
+    UserList:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+      example:
+        - id: 1
+          username: example
+          email: example@angelxehg.com
+        - id: 2
+          username: example_b
+          email: example_b@angelxehg.com
+        - id: 3
+          username: example_c
+          email: example_c@angelxehg.com
+    UserForm:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        re_password:
+          type: string
+      example:
+        username: example
+        email: example@angelxehg.com
+        password: my_secret_pass
+        re_password: my_secret_pass
     Organization:
       type: object
       properties:
@@ -888,23 +952,6 @@ components:
         description:
           type: string
           example: We make Nova Software
-    User:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-      example:
-        id: 1
-        name: Nova User
-    UserForm:
-      type: object
-      properties:
-        name:
-          type: string
-      example:
-        name: Nova User
     Workspace:
       type: object
       properties:
@@ -1002,7 +1049,51 @@ components:
         description:
           type: string
           example: Model view set
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
   requestBodies:
+    LoginRequest:
+      description: Request body for login
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+    RefreshRequest:
+      description: Request body for refresh
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+    VerifyRequest:
+      description: Request body for verify
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
     OrganizationRequest:
       description: Request body for an organization
       required: true
@@ -1145,6 +1236,37 @@ components:
               read_only: false
               label: Name
               max_length: 100
+    UserOptionListExample:
+      summary: Example of User Option List
+      value:
+        name: User Viewset List
+        description: User Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            email:
+              type: string
+              required: true
+              read_only: false
+              label: Email
+              max_length: 50
+            username:
+              type: string
+              required: false
+              read_only: false
+              label: Username
+              max_length: 1000
     OrganizationOptionListExample:
       summary: Example of Organization Option List
       value:
@@ -1209,4 +1331,5 @@ components:
               max_length: 1000
   links: {}
   callbacks: {}
-security: []
+security:
+  - bearerAuth: [] 
