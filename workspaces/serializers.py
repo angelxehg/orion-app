@@ -3,7 +3,10 @@ from . import models
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
-    """ Organization Model serializer """
+    admin = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
     class Meta:
         model = models.Organization
-        fields = ('id', 'title', 'description')
+        fields = ('id', 'title', 'description', 'admin')
