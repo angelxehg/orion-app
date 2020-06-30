@@ -18,3 +18,6 @@ class WorkspaceViewset(viewsets.ModelViewSet):
     queryset = models.Workspace.objects.all()
     serializer_class = serializers.WorkspaceSerializer
     permission_classes = [IsAdmin]
+
+    def get_queryset(self):
+        return models.Workspace.objects.filter(parent=self.kwargs['organization_pk'])

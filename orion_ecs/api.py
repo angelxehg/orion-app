@@ -1,6 +1,10 @@
-from rest_framework import routers
-from workspaces import views as workspace_view_sets
+from rest_framework_nested import routers
+from workspaces.views import OrganizationViewset, WorkspaceViewset
 
-router = routers.DefaultRouter()
-router.register(r'organizations', workspace_view_sets.OrganizationViewset)
-router.register(r'workspaces', workspace_view_sets.WorkspaceViewset)
+router = routers.SimpleRouter()
+router.register(r'organizations', OrganizationViewset)
+
+organization_router = routers.NestedSimpleRouter(router, r'organizations', lookup='organization')
+organization_router.register(r'workspaces', WorkspaceViewset)
+
+# router.register(r'workspaces', WorkspaceViewset)

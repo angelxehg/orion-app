@@ -16,8 +16,15 @@ class WorkspaceSerializer(serializers.ModelSerializer):
     admin = serializers.HiddenField(
         default=serializers.CurrentUserDefault()
     )
-    parent = serializers.Field()
+    parent = serializers.HiddenField(
+        default=3,
+    )
+
+    def create(self, validated_data):
+        parent = models.Organization.objects.get(pk=self.context["view"].kwargs["organization_pk"])
+        validated_data["parent"] = parent
+        return models.Workspace.objects.create(**validated_data)
 
     class Meta:
-        model = models.Organization
+        model = models.Workspace
         fields = ('id', 'title', 'description', 'admin', 'parent')
