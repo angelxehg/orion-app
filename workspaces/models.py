@@ -40,3 +40,6 @@ class Group(OrganizationChild):
     """ Group Model class """
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=1000)
+    users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+    )
