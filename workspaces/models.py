@@ -17,3 +17,20 @@ class Organization(ManagedModel):
     """ Organization Model class """
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=1000)
+
+
+class OrganizationChild(models.Model):
+    """ Organization Child Model abstract class """
+    parent = models.ForeignKey(
+        Organization,
+        on_delete=models.CASCADE
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Workspace(ManagedModel, OrganizationChild):
+    """ Workspace Model class """
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=1000)

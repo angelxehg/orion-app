@@ -11,3 +11,10 @@ class OrganizationViewset(viewsets.ModelViewSet):
     queryset = models.Organization.objects.all()
     serializer_class = serializers.OrganizationSerializer
     permission_classes = [IsAdmin]
+
+
+class WorkspaceViewset(viewsets.ModelViewSet):
+    """ Organization Model view set """
+    queryset = models.Workspace.objects.all()
+    serializer_class = serializers.WorkspaceSerializer
+    permission_classes = [IsAdmin]

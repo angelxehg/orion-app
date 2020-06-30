@@ -3,3 +3,4 @@ from workspaces import views as workspace_view_sets
 
 router = routers.DefaultRouter()
 router.register(r'organizations', workspace_view_sets.OrganizationViewset)
+router.register(r'workspaces', workspace_view_sets.WorkspaceViewset)
