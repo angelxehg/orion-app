@@ -19,7 +19,9 @@ Activar entorno virtual `source .venv/orion/bin/activate.fish`
 
 Instalar paquetes `pip install -r requirements.txt`
 
-Generar configuración `cp .env.example .env`
+Crear archivo de configuración `cp .env.example .env`
+
+Generar clave secreta `python keygen.py`
 
 Migrar estructura base de datos `python manage.py migrate`
 
