@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Django" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="Django (run)" type="PythonConfigurationType" factoryName="Python">
     <module name="orion-ecs-cmd" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />

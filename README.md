@@ -11,16 +11,16 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 - [ ]  Crear interface de usuario
 - [ ]  Desplegar aplicación
 
-## Operación
+## Commands
 
-Para crear un entorno virtual `python -m virtualenv ~/.virtualenvs/venv-orion/`
+Crear entorno virtual `python -m virtualenv .env/orion/`
 
-Para activar el entorno virtual `. ~/.virtualenvs/venv-orion/bin/activate.fish`
+Activar entorno virtual `source .env/orion/bin/activate.fish`
 
-Para instalar los paquetes usar `pip install -r requirements.txt`
+Instalar paquetes `pip install -r requirements.txt`
 
-Para migrar las bases de datos usar `python manage.py migrate`
+Migrar estructura base de datos `python manage.py migrate`
 
-Para crear super usuario usar `python manage.py createsuperuser`
+Crear super usuario `python manage.py createsuperuser`
 
-Para iniciar el servidor Django usar `python manage.py runserver` o `python manage.py runserver 0.0.0.0:8000`
+Iniciar servidor `python manage.py runserver`
