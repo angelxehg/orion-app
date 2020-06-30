@@ -31,7 +31,7 @@ Generar clave secreta `python keygen.py`
 
 Configurar clave secreta `heroku config:set SECRET_KEY=[SECRET_KEY]`
 
-Activar depuración (opcional) `heroku config:set DEBUG=TRUE`
+Configurar depuración `heroku config:set DEBUG=FALSE` o `heroku config:set DEBUG=TRUE`
 
 Configurar host `heroku config:set HOST=[HOST]`
 
