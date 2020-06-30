@@ -13,11 +13,13 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 
 ## Commands
 
-Crear entorno virtual `python -m virtualenv .env/orion/`
+Crear entorno virtual `python -m virtualenv .venv/orion/`
 
-Activar entorno virtual `source .env/orion/bin/activate.fish`
+Activar entorno virtual `source .venv/orion/bin/activate.fish`
 
 Instalar paquetes `pip install -r requirements.txt`
+
+Generar configuración `cp .env.example .env`
 
 Migrar estructura base de datos `python manage.py migrate`
 
