@@ -371,9 +371,18 @@ paths:
       responses:
         "204":
           description: Deleted workspace
-  "/groups/":
+  "/organizations/{org}/groups/":
     summary: Represents a list of Groups
     description: This resource path represents a Group in the platform
+    parameters:
+      - name: org
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
     options:
       summary: List group options
       description: Returns the options for group
@@ -421,10 +430,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Group"
-  "/groups/{id}/":
+  "/organizations/{org}/groups/{id}/":
     summary: Represents a list of Groups
     description: This resource path represents a Group in the platform
     parameters:
+      - name: org
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
       - name: id
         in: path
         description: ID of group
@@ -464,7 +481,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Group"
-    put:
+    patch:
       summary: Update an group
       description: Updates group data
       operationId: updateGroup

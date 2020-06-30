@@ -21,3 +21,12 @@ class WorkspaceViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return models.Workspace.objects.filter(parent=self.kwargs['organization_pk'])
+
+
+class GroupViewset(viewsets.ModelViewSet):
+    """ Organization Model view set """
+    queryset = models.Group.objects.all()
+    serializer_class = serializers.GroupSerializer
+
+    def get_queryset(self):
+        return models.Group.objects.filter(parent=self.kwargs['organization_pk'])

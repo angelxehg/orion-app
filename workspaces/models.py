@@ -34,3 +34,9 @@ class Workspace(ManagedModel, OrganizationChild):
     """ Workspace Model class """
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=1000)
+
+
+class Group(OrganizationChild):
+    """ Group Model class """
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=1000)
