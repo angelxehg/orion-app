@@ -1,0 +1,4 @@
+# Specifies only dev-specific requirements
+# But imports the common ones too
+-r common.txt
+autopep8==1.5.3
