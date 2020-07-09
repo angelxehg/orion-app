@@ -32,6 +32,7 @@ Se requiere configurar la base de datos y un super usuario antes de iniciar el s
 - Migrar estructura base de datos `python manage.py migrate` (se usará SQLite por defecto)
 - Crear super usuario `python manage.py createsuperuser`
 - Iniciar servidor `python manage.py runserver`
+- Ejecutar pruebas `python manage.py test`
 
 ## Instalación en Heroku
 
