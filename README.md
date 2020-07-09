@@ -21,9 +21,9 @@ Para instalar de manera local ejecute los siguientes comandos:
 
 ### Variables de entorno
 
-Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor
+Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor. Estas pueden ser especificadas en Run Configuration de PyCharm.
 
-Generar clave secreta `python keygen.py`
+- Generar clave secreta `python keygen.py`
 
 ### Configurar e iniciar servidor
 
@@ -47,6 +47,7 @@ Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda
 - Configurar clave secreta `heroku config:set SECRET_KEY=[SECRET_KEY]`
 - Configurar depuración `heroku config:set DEBUG=FALSE` o `heroku config:set DEBUG=TRUE`
 - Configurar host `heroku config:set HOST=[HOST]`
+- Configurar production settings `heroku config:set DJANGO_SETTINGS_MODULE=orion_ecs.settings`
 
 ### Configurar e iniciar servidor
 
