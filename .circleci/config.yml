@@ -4,32 +4,14 @@ orbs:
   python: circleci/python@0.2.1
 
 jobs:
-  build:
+  build-and-test:
     docker:
       - image: circleci/python:3.8.2
         environment:
           PIPENV_VENV_IN_PROJECT: true
           HOST: 127.0.0.1
+          SECRET_KEY: test_key
           DEBUG: FALSE
-          SECRET_KEY: example
-    steps:
-      - checkout
-      - run: sudo chown -R circleci:circleci /usr/local/bin
-      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.8/site-packages
-      - restore_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-      - run:
-          command: |
-            sudo pip install pipenv
-            pipenv install
-      - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.6/site-packages"
-  test:
-    executor: python/default
     steps:
       - checkout
       - python/load-cache
@@ -44,5 +26,4 @@ jobs:
 workflows:
   main:
     jobs:
-      - build
-      - test
+      - build-and-test
