@@ -1,0 +1,6 @@
+# Specifies only dev-specific requirements
+# But imports the common ones too
+-r common.txt
+django-heroku==0.3.1
+psycopg2==2.8.5
+psycopg2-binary==2.8.5

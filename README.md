@@ -11,34 +11,48 @@ Desarrollar una aplicación de mensajería instantánea con herramientas para me
 - [ ]  Crear interface de usuario
 - [ ]  Desplegar aplicación
 
-## Commands
+## Instalación local
 
-Crear entorno virtual `python -m virtualenv .venv/orion/`
+Para instalar de manera local ejecute los siguientes comandos:
 
-Activar entorno virtual `source .venv/orion/bin/activate.fish`
+- Crear entorno virtual `python -m virtualenv .venv/orion/`
+- Activar entorno virtual `source .venv/orion/bin/activate`
+- Instalar paquetes `pip install -r config/requirements/dev.txt`
 
-Instalar paquetes `pip install -r requirements.txt`
+### Variables de entorno
 
-Migrar estructura base de datos `python manage.py migrate`
-
-Crear super usuario `python manage.py createsuperuser`
-
-Iniciar servidor `python manage.py runserver`
-
-## Deploy (Heroku)
+Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor
 
 Generar clave secreta `python keygen.py`
 
-Configurar clave secreta `heroku config:set SECRET_KEY=[SECRET_KEY]`
+### Configurar e iniciar servidor
 
-Configurar depuración `heroku config:set DEBUG=FALSE` o `heroku config:set DEBUG=TRUE`
+Se requiere configurar la base de datos y un super usuario antes de iniciar el servidor
 
-Configurar host `heroku config:set HOST=[HOST]`
+- Migrar estructura base de datos `python manage.py migrate` (se usará SQLite por defecto)
+- Crear super usuario `python manage.py createsuperuser`
+- Iniciar servidor `python manage.py runserver`
 
-Desactivar CollectStatic `heroku config:set DISABLE_COLLECTSTATIC=1`
+## Instalación en Heroku
 
-Migrar estructura base de datos `heroku run python manage.py migrate`
+Para instalar en Heroku ejecute los siguientes comandos:
 
-Correr CollectStatic `heroku run 'bower install --config.interactive=false;grunt prep;python manage.py collectstatic --noinput'`
+- Crear aplicación en Heroku `heroku create`
 
-Reactivar CollectStatic `heroku config:unset DISABLE_COLLECTSTATIC`
+### Variables de entorno
+
+Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor
+
+- Generar clave secreta `python keygen.py`
+- Configurar clave secreta `heroku config:set SECRET_KEY=[SECRET_KEY]`
+- Configurar depuración `heroku config:set DEBUG=FALSE` o `heroku config:set DEBUG=TRUE`
+- Configurar host `heroku config:set HOST=[HOST]`
+
+### Configurar e iniciar servidor
+
+Se requiere configurar la base de datos y un super usuario antes de iniciar el servidor
+
+- Desactivar CollectStatic `heroku config:set DISABLE_COLLECTSTATIC=1` (solo se requiere la primera vez)
+- Migrar estructura base de datos `heroku run python manage.py migrate`
+- Correr CollectStatic `heroku run 'bower install --config.interactive=false;grunt prep;python manage.py collectstatic --noinput'`
+- Reactivar CollectStatic `heroku config:unset DISABLE_COLLECTSTATIC`
