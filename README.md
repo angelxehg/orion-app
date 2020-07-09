@@ -19,12 +19,6 @@ Para instalar de manera local ejecute los siguientes comandos:
 - Activar entorno virtual `source .venv/orion/bin/activate`
 - Instalar paquetes `pip install -r config/requirements/dev.txt`
 
-### Variables de entorno
-
-Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor. Estas pueden ser especificadas en Run Configuration de [PyCharm](./docs/pycharm.md).
-
-- Generar clave secreta `python keygen.py`
-
 ### Configurar e iniciar servidor
 
 Se requiere configurar la base de datos y un super usuario antes de iniciar el servidor
