@@ -21,7 +21,7 @@ Para instalar de manera local ejecute los siguientes comandos:
 
 ### Variables de entorno
 
-Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor. Estas pueden ser especificadas en Run Configuration de PyCharm.
+Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor. Estas pueden ser especificadas en Run Configuration de [PyCharm](./docs/pycharm.md).
 
 - Generar clave secreta `python keygen.py`
 
