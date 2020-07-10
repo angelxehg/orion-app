@@ -2,21 +2,21 @@ from django.db import models
 from django.conf import settings
 
 
-# class ManagedModel(models.Model):
-#     """ Managed Model abstract class """
-#     admin = models.ForeignKey(
-#         settings.AUTH_USER_MODEL,
+class Organization(models.Model):
+    """ Organization Model class """
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=1000)
+    people = models.ManyToManyField(
+        settings.AUTH_USER_MODEL
+    )
+
+
+# class Organization(BasicModel):
+#     """ Organization Model class """
+#     people = models.OneToOneField(
+#         Placeholder,
 #         on_delete=models.CASCADE
 #     )
-
-#     class Meta:
-#         abstract = True
-
-
-# class Organization(ManagedModel):
-#     """ Organization Model class """
-#     title = models.CharField(max_length=50)
-#     description = models.CharField(max_length=1000)
 
 
 # class OrganizationChild(models.Model):
@@ -28,6 +28,23 @@ from django.conf import settings
 
 #     class Meta:
 #         abstract = True
+
+
+# class Placeholder(BasicModel):
+#     """ User Placeholder Model class """
+#     users = models.ManyToManyField(
+#         settings.AUTH_USER_MODEL,
+#     )
+
+
+# class Group(BasicModel, OrganizationChild):
+#     """ Group Model class """
+#     default = models.BooleanField()
+
+
+# class Workspace(BasicModel, OrganizationChild):
+#     """ Workspace Model class """
+#     default = models.BooleanField()
 
 
 # class Group(OrganizationChild):
