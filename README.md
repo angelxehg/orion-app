@@ -42,7 +42,7 @@ Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda
 - Configurar clave secreta `heroku config:set SECRET_KEY=[SECRET_KEY]`
 - Configurar depuración `heroku config:set DEBUG=FALSE` o `heroku config:set DEBUG=TRUE`
 - Configurar host `heroku config:set HOST=[HOST]`
-- Configurar production settings `heroku config:set DJANGO_SETTINGS_MODULE=orion_ecs.settings`
+- Configurar production settings `heroku config:set DJANGO_SETTINGS_MODULE=orion_ecs.production`
 
 ### Configurar e iniciar servidor
 
