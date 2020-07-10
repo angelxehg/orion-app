@@ -11,3 +11,11 @@ class OrganizationViewset(viewsets.ModelViewSet):
     queryset = models.Organization.objects.all()
     serializer_class = serializers.OrganizationSerializer
     permission_classes = [IsObjectAdmin]
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the purchases
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return models.Organization.objects.filter(admin=user)
