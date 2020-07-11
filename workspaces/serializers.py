@@ -11,8 +11,10 @@ class OrganizationSerializer(serializers.ModelSerializer):
         many=True, queryset=User.objects.all(), required=False)
 
     def create(self, validated_data):
-        people = validated_data["people"]
-        del validated_data["people"]
+        people = []
+        if "people" in validated_data:
+            people = validated_data["people"]
+            del validated_data["people"]
         organization = Organization.objects.create(**validated_data)
         for user in people:
             organization.people.add(user)

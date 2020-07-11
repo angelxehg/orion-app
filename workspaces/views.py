@@ -14,8 +14,8 @@ class OrganizationViewset(viewsets.ModelViewSet):
 
     def get_queryset(self):
         """
-        This view should return a list of all the purchases
+        This view should return a list of all the organizations
         for the currently authenticated user.
         """
         user = self.request.user
-        return models.Organization.objects.filter(admin=user)
+        return user.organization_set.all()
