@@ -18,4 +18,4 @@ class OrganizationViewset(viewsets.ModelViewSet):
         for the currently authenticated user.
         """
         user = self.request.user
-        return user.organization_set.all()
+        return user.organizations.all()

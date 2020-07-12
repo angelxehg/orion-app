@@ -8,7 +8,10 @@ class OrganizationSerializer(serializers.ModelSerializer):
         default=serializers.CurrentUserDefault()
     )
     people = serializers.PrimaryKeyRelatedField(
-        many=True, queryset=User.objects.all(), required=False)
+        many=True,
+        queryset=User.objects.all(),
+        required=False
+    )
 
     def create(self, validated_data):
         people = []

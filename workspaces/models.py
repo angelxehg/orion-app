@@ -8,12 +8,12 @@ class Organization(models.Model):
     description = models.CharField(max_length=1000)
     admin = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='organization_admin',
+        related_name='admin_organizations',
         on_delete=models.CASCADE
     )
     people = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='organization_people'
+        related_name='organizations'
     )
 
 
@@ -23,15 +23,15 @@ class Workspace(models.Model):
     description = models.CharField(max_length=1000)
     organization = models.ForeignKey(
         Organization,
-        related_name='workspace_organization',
+        related_name='workspaces',
         on_delete=models.CASCADE
     )
     admin = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        related_name='workspace_admin',
+        related_name='admin_workspaces',
         on_delete=models.CASCADE
     )
     people = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='workspace_people',
+        related_name='workspaces',
     )
