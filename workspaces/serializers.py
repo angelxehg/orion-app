@@ -12,6 +12,12 @@ class OrganizationSerializer(serializers.ModelSerializer):
         queryset=User.objects.all(),
         required=False
     )
+    admin_flag = serializers.SerializerMethodField(method_name='get_admin_flag')
+
+    def get_admin_flag(self, instance):
+        admin = instance.admin
+        user = self.context['request'].user
+        return user == admin
 
     def create(self, validated_data):
         people = []
@@ -28,7 +34,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = ('id', 'title', 'description', 'admin', 'people')
+        fields = ('id', 'title', 'description', 'admin', 'admin_flag', 'people')
 
 
 class WorkspaceSerializer(serializers.ModelSerializer):
@@ -43,6 +49,12 @@ class WorkspaceSerializer(serializers.ModelSerializer):
         queryset=User.objects.all(),
         required=False
     )
+    admin_flag = serializers.SerializerMethodField(method_name='get_admin_flag')
+
+    def get_admin_flag(self, instance):
+        admin = instance.admin
+        user = self.context['request'].user
+        return user == admin
 
     def create(self, validated_data):
         organization = Organization.objects.get(pk=self.context["view"].kwargs["organization_pk"])
@@ -61,4 +73,4 @@ class WorkspaceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Workspace
-        fields = ('id', 'title', 'description', 'organization', 'admin', 'people')
+        fields = ('id', 'title', 'description', 'organization', 'admin', 'admin_flag', 'people')
