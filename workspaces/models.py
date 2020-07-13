@@ -16,6 +16,8 @@ class Organization(models.Model):
         related_name='organizations'
     )
 
+    objects = models.Manager()
+
 
 class Workspace(models.Model):
     """ Workspace Model class """
@@ -35,3 +37,5 @@ class Workspace(models.Model):
         settings.AUTH_USER_MODEL,
         related_name='workspaces',
     )
+
+    objects = models.Manager()
