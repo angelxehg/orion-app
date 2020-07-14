@@ -1,6 +1,6 @@
 # Orion ECS CMD
 
-Orion Effective Communications System Command Module
+Orion Effective Communications System Command Module. Powers [Orion Chat](https://github.com/angelxehg/orion-chat-app).
 
 ## Objetivos
 
