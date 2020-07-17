@@ -22,7 +22,7 @@ class OrganizationViewset(viewsets.ModelViewSet):
 
 
 class WorkspaceViewset(viewsets.ModelViewSet):
-    """ Organization Model view set """
+    """ Workspace Model view set """
     queryset = models.Workspace.objects.all()
     serializer_class = serializers.WorkspaceSerializer
     permission_classes = [IsObjectAdmin]
@@ -34,3 +34,18 @@ class WorkspaceViewset(viewsets.ModelViewSet):
         """
         user = self.request.user
         return user.workspaces.filter(organization=self.kwargs['organization_pk'])
+
+
+class ChannelViewset(viewsets.ModelViewSet):
+    """ Channel Model view set """
+    queryset = models.Channel.objects.all()
+    serializer_class = serializers.ChannelSerializer
+    permission_classes = [IsObjectAdmin]
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the organizations
+        for the currently authenticated user.
+        """
+        user = self.request.user
+        return user.channels.filter(organization=self.kwargs['organization_pk'])
