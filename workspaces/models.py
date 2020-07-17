@@ -39,3 +39,40 @@ class Workspace(models.Model):
     )
 
     objects = models.Manager()
+
+
+class Channel(models.Model):
+    """ Channel Model class """
+    title = models.CharField(max_length=50)
+    description = models.CharField(max_length=1000)
+    organization = models.ForeignKey(
+        Organization,
+        related_name='channels',
+        on_delete=models.CASCADE
+    )
+    admin = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='admin_channels',
+        on_delete=models.CASCADE
+    )
+    people = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='channels',
+    )
+
+    objects = models.Manager()
+
+
+class Message(models.Model):
+    """ Channel Model class """
+    content = models.CharField(max_length=1000)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='messages',
+        on_delete=models.CASCADE
+    )
+    channel = models.ForeignKey(
+        Channel,
+        related_name='messages',
+        on_delete=models.CASCADE
+    )
