@@ -3,7 +3,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from . import models
 from . import serializers
-from .permissions import IsObjectAdmin
+from .permissions import IsObjectAdmin, IsMessageAuthor
 
 
 class OrganizationViewset(viewsets.ModelViewSet):
@@ -49,3 +49,17 @@ class ChannelViewset(viewsets.ModelViewSet):
         """
         user = self.request.user
         return user.channels.filter(organization=self.kwargs['organization_pk'])
+
+
+class MessageViewset(viewsets.ModelViewSet):
+    """ Message Model view set """
+    queryset = models.Message.objects.all()
+    serializer_class = serializers.MessageSerializer
+    permission_classes = [IsMessageAuthor]
+
+    def get_queryset(self):
+        """
+        This view should return a list of all the organizations
+        for the currently authenticated user.
+        """
+        return models.Message.objects.filter(channel=self.kwargs['channel_pk'])

@@ -1,6 +1,6 @@
 from djoser.conf import User
 from rest_framework import serializers
-from workspaces.models import Organization, Workspace, Channel
+from workspaces.models import Organization, Workspace, Channel, Message
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
@@ -121,3 +121,30 @@ class ChannelSerializer(serializers.ModelSerializer):
         model = Channel
         fields = ('id', 'title', 'description', 'organization',
                   'admin', 'admin_flag', 'people')
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    author = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+    channel = serializers.HiddenField(
+        default=1,
+    )
+    mine_flag = serializers.SerializerMethodField(
+        method_name='get_mine_flag')
+
+    def get_mine_flag(self, instance):
+        author = instance.author
+        user = self.context['request'].user
+        return user == author
+
+    def create(self, validated_data):
+        channel = Channel.objects.get(
+            pk=self.context["view"].kwargs["channel_pk"])
+        validated_data["channel"] = channel
+        message = Message.objects.create(**validated_data)
+        return message
+
+    class Meta:
+        model = Message
+        fields = ('id', 'content', 'channel', 'author', 'mine_flag')
