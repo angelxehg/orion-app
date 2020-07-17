@@ -61,3 +61,18 @@ class Channel(models.Model):
     )
 
     objects = models.Manager()
+
+
+class Message(models.Model):
+    """ Channel Model class """
+    content = models.CharField(max_length=1000)
+    author = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='messages',
+        on_delete=models.CASCADE
+    )
+    channel = models.ForeignKey(
+        Channel,
+        related_name='messages',
+        on_delete=models.CASCADE
+    )
