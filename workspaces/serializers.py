@@ -130,8 +130,13 @@ class MessageSerializer(serializers.ModelSerializer):
     channel = serializers.HiddenField(
         default=1,
     )
+    author_name = serializers.SerializerMethodField(
+        method_name='get_author_name')
     mine_flag = serializers.SerializerMethodField(
         method_name='get_mine_flag')
+
+    def get_author_name(self, instance):
+        return instance.author.username
 
     def get_mine_flag(self, instance):
         author = instance.author
@@ -147,4 +152,5 @@ class MessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Message
-        fields = ('id', 'content', 'channel', 'author', 'mine_flag')
+        fields = ('id', 'content', 'channel',
+                  'author', 'author_name', 'mine_flag')
