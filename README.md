@@ -1,17 +1,8 @@
-# Orion ECS CMD
+# Orion Chat API
 
-Orion Effective Communications System Command Module. Powers [Orion Chat](https://github.com/angelxehg/orion-chat-app).
+Orion Effective Communications System Command Module. Powers [Orion Chat](https://github.com/angelxehg/orion-chat).
 
-[![CircleCI](https://circleci.com/gh/angelxehg/orion-ecs-cmd.svg?style=shield)](https://circleci.com/gh/angelxehg/orion-ecs-cmd)
-
-## Objetivos
-
-Desarrollar una aplicación de mensajería instantánea con herramientas para mejorar la eficiencia de la comunicación entre alumnos y profesores, en un periodo de 3 meses.
-
-- [ ]  Completar documentación ISO 29110
-- [ ]  Crear plataforma Backend
-- [ ]  Crear interface de usuario
-- [ ]  Desplegar aplicación
+[![CircleCI](https://circleci.com/gh/angelxehg/orion-chat-api.svg?style=shield)](https://circleci.com/gh/angelxehg/orion-chat-api)
 
 ## Instalación local
 
