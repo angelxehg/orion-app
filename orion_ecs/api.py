@@ -1,7 +1,8 @@
 from rest_framework_nested import routers
-from workspaces.views import OrganizationViewset, WorkspaceViewset, ChannelViewset, MessageViewset
+from workspaces.views import SearchViewset, OrganizationViewset, WorkspaceViewset, ChannelViewset, MessageViewset
 
 router = routers.SimpleRouter()
+router.register(r'search', SearchViewset)
 router.register(r'organizations', OrganizationViewset)
 
 organization_router = routers.NestedSimpleRouter(

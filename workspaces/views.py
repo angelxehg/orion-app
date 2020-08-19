@@ -6,6 +6,12 @@ from . import serializers
 from .permissions import IsObjectAdmin, IsMessageAuthor
 
 
+class SearchViewset(viewsets.ReadOnlyModelViewSet):
+    """ Search Model view set """
+    queryset = models.SearchResult.objects.all()
+    serializer_class = serializers.SearchSerializer
+
+
 class OrganizationViewset(viewsets.ModelViewSet):
     """ Organization Model view set """
     queryset = models.Organization.objects.all()

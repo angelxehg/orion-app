@@ -1,6 +1,13 @@
 from djoser.conf import User
 from rest_framework import serializers
-from workspaces.models import Organization, Workspace, Channel, Message
+from workspaces.models import SearchResult, Organization, Workspace, Channel, Message
+
+
+class SearchSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SearchResult
+        fields = ('type', 'content',)
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
