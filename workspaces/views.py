@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 from rest_framework import viewsets
+from rest_framework.response import Response
 from . import models
 from . import serializers
 from .permissions import IsObjectAdmin, IsMessageAuthor
@@ -10,6 +11,10 @@ class SearchViewset(viewsets.ReadOnlyModelViewSet):
     """ Search Model view set """
     queryset = models.SearchResult.objects.all()
     serializer_class = serializers.SearchSerializer
+
+    def retrieve(self, request,  *args, **kwargs):
+        serializer = self.get_serializer()
+        return Response(serializer.data)
 
 
 class OrganizationViewset(viewsets.ModelViewSet):
