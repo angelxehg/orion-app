@@ -2,6 +2,14 @@ from django.db import models
 from django.conf import settings
 
 
+class SearchResult(models.Model):
+    """ Search result Model class """
+    type = models.CharField(max_length=20)
+    content = models.CharField(max_length=500)
+
+    objects = models.Manager()
+
+
 class Organization(models.Model):
     """ Organization Model class """
     title = models.CharField(max_length=50)
