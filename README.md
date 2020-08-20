@@ -12,8 +12,6 @@ Para instalar de manera local ejecute los siguientes comandos:
 - Activar entorno virtual `source .venv/orion/bin/activate`
 - Instalar paquetes `pip install -r config/requirements/dev.txt`
 
-### Configurar e iniciar servidor
-
 Se requiere configurar la base de datos y un super usuario antes de iniciar el servidor
 
 - Migrar estructura base de datos `python manage.py migrate` (se usará SQLite por defecto)
@@ -27,8 +25,6 @@ Para instalar en Heroku ejecute los siguientes comandos:
 
 - Crear aplicación en Heroku `heroku create`
 
-### Variables de entorno
-
 Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda funcionar el servidor
 
 - Generar clave secreta `python keygen.py`
@@ -36,8 +32,6 @@ Se deben especificar las variables `SECRET_KEY`, `HOST` y `DEBUG` para que pueda
 - Configurar depuración `heroku config:set DEBUG=FALSE` o `heroku config:set DEBUG=TRUE`
 - Configurar host `heroku config:set HOST=[HOST]`
 - Configurar production settings `heroku config:set DJANGO_SETTINGS_MODULE=orion_ecs.production`
-
-### Configurar e iniciar servidor
 
 Se requiere configurar la base de datos y un super usuario antes de iniciar el servidor
 
