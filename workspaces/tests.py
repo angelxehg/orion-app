@@ -23,54 +23,112 @@ class API():
             return API.org(org_id) + 'channels/'
         return API.org(org_id) + 'channels/{}/'.format(chn_id)
 
+    @staticmethod
+    def msg(org_id, chn_id):
+        return API.chn(org_id, chn_id) + 'messages/'
+
+    @staticmethod
+    def auth(par):
+        return '/api/v1/auth/jwt/{}/'.format(par)
+
+    @staticmethod
+    def search():
+        return '/api/v1/search/'
+
 
 class FunctionalTests(APITestCase):
 
     def setUp(self):
         self.username = 'functionalman'
         self.password = 'functionalpass'
-        self.user = User.objects.create(
+        self.user = User.objects.create_user(
             username=self.username, password=self.password)
         self.org = models.Organization.objects.create(
-            title="Nova X", description="Functional organization", admin=self.user
+            title="Nova X",
+            description="Functional organization",
+            admin=self.user
         )
         self.wks = models.Workspace.objects.create(
-            title="Workspace", description="Functional workspace", admin=self.user, organization=self.org
+            title="Workspace",
+            description="Functional workspace",
+            admin=self.user,
+            organization=self.org
         )
         self.chn = models.Channel.objects.create(
-            title="Channel", description="Functional channel", admin=self.user, organization=self.org
+            title="Channel",
+            description="Functional channel",
+            admin=self.user,
+            organization=self.org
         )
         self.client.force_authenticate(user=self.user)
 
     def test_f1(self):
         """ PF1: Acceso a plataforma """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.auth('create')
+        response = self.client.options(url, format='json')
+        self.assertEqual(response.status_code, 200)
 
     def test_f2(self):
         """ PF2: Inicio de sesión """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.auth('create')
+        credentials = {
+            'username': 'functionalman',
+            'password': 'functionalpass'
+        }
+        response = self.client.post(url, credentials, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('access', json_data)
+        self.assertIn('refresh', json_data)
 
     def test_f3(self):
         """ PF3: Organización """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.org(self.org.id)
+        response = self.client.options(url, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('name', json_data)
+        self.assertIn('description', json_data)
 
     def test_f4(self):
         """ PF4: Mensajes instantáneos """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.msg(self.org.id, self.chn.id)
+        message = {
+            'content': 'This is the message content'
+        }
+        response = self.client.post(url, message, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(json_data['content'], message['content'])
+        self.assertEqual(json_data['author_name'], 'functionalman')
+        self.assertTrue(json_data['mine_flag'])
 
     def test_f5(self):
         """ PF5: Canales y mensajes """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.msg(self.org.id, self.chn.id)
+        message = {
+            'content': 'This is the message in the channel'
+        }
+        response1 = self.client.post(url, message, format='json')
+        response2 = self.client.get(url, message, format='json')
+        json_data1 = response1.json()
+        json_data2 = response2.json()
+        last_msg = json_data2[-1]
+        self.assertEqual(response1.status_code, 201)
+        self.assertEqual(response2.status_code, 200)
+        self.assertEqual(json_data1['content'], message['content'])
+        self.assertEqual(json_data1['author_name'], 'functionalman')
+        self.assertTrue(json_data1['mine_flag'])
+        self.assertGreater(len(json_data2), 0)
+        self.assertEqual(last_msg['content'], message['content'])
+        self.assertEqual(last_msg['author_name'], 'functionalman')
+        self.assertTrue(last_msg['mine_flag'])
 
     def test_f6(self):
         """ PF6: Búsqueda avanzada """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.search()
+        response = self.client.options(url, format='json')
+        self.assertEqual(response.status_code, 200)
 
 
 class UnitTests(APITestCase):
@@ -79,21 +137,31 @@ class UnitTests(APITestCase):
         self.username = 'testman'
         self.password = 'testpass'
         self.user = User.objects.create(
-            username=self.username, password=self.password)
+            username=self.username,
+            password=self.password)
         self.org = models.Organization.objects.create(
-            title="Nova X", description="Main organization", admin=self.user
+            title="Nova X",
+            description="Main organization",
+            admin=self.user
         )
         self.wks = models.Workspace.objects.create(
-            title="Workspace", description="Main workspace", admin=self.user, organization=self.org
+            title="Workspace",
+            description="Main workspace",
+            admin=self.user,
+            organization=self.org
         )
         self.chn = models.Channel.objects.create(
-            title="Channel", description="Main channel", admin=self.user, organization=self.org
+            title="Channel",
+            description="Main channel",
+            admin=self.user,
+            organization=self.org
         )
         self.client.force_authenticate(user=self.user)
 
     def test_u1_1(self):
         """ PU1.1: API REST """
-        response = self.client.options(API.org(), format='json')
+        url = API.org()
+        response = self.client.options(url, format='json')
         self.assertEqual(response.status_code, 200)
 
     def test_u1_2(self):
