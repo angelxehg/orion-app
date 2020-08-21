@@ -232,35 +232,48 @@ class UnitTests(APITestCase):
 
     def test_u4_1(self):
         """ PU4.1: Enviar mensaje """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.msg(self.org.id, self.chn.id)
+        message = {
+            'content': 'This is the message content'
+        }
+        response = self.client.post(url, message, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(json_data['content'], message['content'])
+        self.assertEqual(json_data['author_name'], 'testman')
+        self.assertTrue(json_data['mine_flag'])
 
     def test_u4_2(self):
         """ PU4.2: Recibir mensaje """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
-
-    def test_u4_3(self):
-        """ PU4.3: Mensaje con adjuntos """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.msg(self.org.id, self.chn.id)
+        response = self.client.get(url, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 200)
 
     def test_u5_1(self):
         """ PU5.1: Crear canal """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.chn(self.org.id)
+        new_chn = {
+            'title': 'Nova Channel',
+            'description': 'Official communications channel'
+        }
+        response = self.client.post(url, new_chn, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(json_data['title'], new_chn['title'])
+        self.assertEqual(json_data['description'], new_chn['description'])
+        self.assertTrue(json_data['admin_flag'])
+        self.assertEqual(len(json_data['people']), 1)
 
     def test_u5_2(self):
-        """ PU5.2: Unirse a canal """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
-
-    def test_u5_3(self):
-        """ PU5.3: Descripción canal """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        """ PU5.2: Obtener canales """
+        url = API.chn(self.org.id)
+        response = self.client.get(url, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 200)
 
     def test_u6(self):
-        """ PU6: Búsqueda con filtros """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        """ PU6: Búsqueda """
+        url = API.search()
+        response = self.client.options(url, format='json')
+        self.assertEqual(response.status_code, 200)
