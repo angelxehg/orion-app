@@ -32,6 +32,10 @@ class API():
         return '/api/v1/auth/jwt/{}/'.format(par)
 
     @staticmethod
+    def users():
+        return '/api/v1/auth/users/'
+
+    @staticmethod
     def search():
         return '/api/v1/search/'
 
@@ -136,7 +140,7 @@ class UnitTests(APITestCase):
     def setUp(self):
         self.username = 'testman'
         self.password = 'testpass'
-        self.user = User.objects.create(
+        self.user = User.objects.create_user(
             username=self.username,
             password=self.password)
         self.org = models.Organization.objects.create(
@@ -178,28 +182,53 @@ class UnitTests(APITestCase):
 
     def test_u2_1(self):
         """ PU2.1: Registro mediante API """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.users()
+        new_user = {
+            'username': 'stranger',
+            'email': 'stranger@dot.com',
+            'password': 'my_fast_pass',
+            're_password': 'my_fast_pass'
+        }
+        response = self.client.post(url, new_user, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(json_data['email'], new_user['email'])
+        self.assertEqual(json_data['username'], new_user['username'])
 
     def test_u2_2(self):
         """ PU2.2: Inicio mediante API """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
-
-    def test_u2_3(self):
-        """ PU2.3: Establecer apodo """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.auth('create')
+        credentials = {
+            'username': 'testman',
+            'password': 'testpass'
+        }
+        response = self.client.post(url, credentials, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('access', json_data)
+        self.assertIn('refresh', json_data)
 
     def test_u3_1(self):
         """ PU3.1: Crear organización """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        url = API.org()
+        new_org = {
+            'title': 'Nova Organization',
+            'description': 'We make Nova Software'
+        }
+        response = self.client.post(url, new_org, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(json_data['title'], new_org['title'])
+        self.assertEqual(json_data['description'], new_org['description'])
+        self.assertTrue(json_data['admin_flag'])
+        self.assertEqual(len(json_data['people']), 1)
 
     def test_u3_2(self):
-        """ PU3.2: Unirse a organización """
-        response = self.client.options(API.org(), format='json')
-        self.assertEqual(1, 1)
+        """ PU3.2: Obtener organizaciones """
+        url = API.org()
+        response = self.client.get(url, format='json')
+        json_data = response.json()
+        self.assertEqual(response.status_code, 200)
 
     def test_u4_1(self):
         """ PU4.1: Enviar mensaje """
