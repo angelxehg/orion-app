@@ -1,8 +1,19 @@
 # Orion Chat API
 
-Orion Effective Communications System Command Module. Powers [Orion Chat](https://github.com/angelxehg/orion-chat).
+API Antigua de la aplicación [Tomatoe Chat](https://github.com/angelxehg/tomatoe-chat), antes llamada Orion Chat.
 
-[![CircleCI](https://circleci.com/gh/angelxehg/orion-chat-api.svg?style=shield)](https://circleci.com/gh/angelxehg/orion-chat-api)
+- [Configurar PyCharm](./docs/pycharm.md)
+- [Diagramas](./docs/diagrams)
+- [Open API 3.0](./docs/api/spec.yaml)
+
+## Objetivos
+
+Desarrollar una aplicación de mensajería instantánea con herramientas para mejorar la eficiencia de la comunicación entre alumnos y profesores, en un periodo de 3 meses.
+
+- [X]  Completar documentación ISO 29110
+- [X]  Crear plataforma Backend
+- [X]  Crear interface de usuario
+- [X]  Desplegar aplicación
 
 ## Instalación local
 

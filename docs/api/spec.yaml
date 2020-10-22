@@ -1,0 +1,1368 @@
+openapi: 3.0.0
+info:
+  version: 0.7.0
+  title: Orion ECS
+  description: The public API specification for Orion ECS Command Module
+  termsOfService: ""
+  contact:
+    name: Angel Hurtado
+    email: contact@angelxehg.com
+    url: "http://angelxehg.com"
+  license:
+    name: MIT
+    url: "https://opensource.org/licenses/MIT"
+servers:
+  - url: "https://orion-ecs-api.herokuapp.com/api/v1"
+    description: Main Heroku Deployment
+  - url: "https://127.0.0.1:8000/api/v1"
+    description: Local development
+paths:
+  "/auth/jwt/create/":
+    post:
+      summary: Create jwt token
+      description: Generates access & refresh jwt tokens
+      operationId: createJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/LoginRequest"
+      responses:
+        "200":
+          description: Received jwt login tokens
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginToken"
+  "/auth/jwt/refresh/":
+    post:
+      summary: Refresh jwt token
+      description: Get a new jwt access token with refresh jwt token
+      operationId: refreshJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/RefreshRequest"
+      responses:
+        "200":
+          description: Received an access jwt token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshToken"
+  "/auth/jwt/verify/":
+    post:
+      summary: Verify jwt token
+      description: Verify any jwt token
+      operationId: verifyJWT
+      tags:
+        - auth
+      parameters: []
+      security: []
+      requestBody:
+        $ref: "#/components/requestBodies/VerifyRequest"
+      responses:
+        "200":
+          description: Verified a jwt token
+  "/auth/users/":
+    summary: Represents a list of Users
+    description: This resource path represents an User in the platform
+    options:
+      summary: List user options
+      description: Returns the options for user
+      operationId: optionUserList
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of user options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/UserOptionListExample"
+    get:
+      summary: List all users
+      description: Returns a list of all users
+      operationId: listUsers
+      tags:
+        - users
+      parameters: []
+      responses:
+        "200":
+          description: List of all users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserList"
+    post:
+      summary: Create an user
+      description: Creates and stores a new user
+      operationId: storeUser
+      tags:
+        - users
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/UserRequest"
+      responses:
+        "201":
+          description: Stored an User
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+  "/organizations/":
+    summary: Represents a list of Organizations
+    description: This resource path represents an Organization in the platform
+    options:
+      summary: List organization options
+      description: Returns the options for organization
+      operationId: optionOrganizationList
+      tags:
+        - organizations
+      parameters: []
+      responses:
+        "200":
+          description: List of organization options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/OrganizationOptionListExample"
+    get:
+      summary: List all organizations
+      description: Returns a list of all organizations
+      operationId: listOrganizations
+      tags:
+        - organizations
+      parameters: []
+      responses:
+        "200":
+          description: List of all organizations
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrganizationList"
+    post:
+      summary: Create an organization
+      description: Creates and stores a new organization
+      operationId: storeOrganization
+      tags:
+        - organizations
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/OrganizationRequest"
+      responses:
+        "201":
+          description: Stored an Organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+  "/organizations/{id}/":
+    summary: Represents a list of Organizations
+    description: This resource path represents an Organization in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an organization options
+      description: Returns the options for organization model
+      operationId: optionOrganization
+      tags:
+        - organizations
+      parameters: []
+      responses:
+        "200":
+          description: List of an organization options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/OrganizationOptionExample"
+    get:
+      summary: Get an organization
+      description: Returns the data of an organization
+      operationId: getOrganization
+      tags:
+        - organizations
+      parameters: []
+      responses:
+        "200":
+          description: Data of an organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+    patch:
+      summary: Update an organization
+      description: Updates organization data
+      operationId: updateOrganization
+      tags:
+        - organizations
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/OrganizationRequest"
+      responses:
+        "200":
+          description: Updated an Organization
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+    delete:
+      summary: Delete an organization
+      description: Deletes an organization
+      operationId: deleteOrganization
+      tags:
+        - organizations
+      parameters: []
+      responses:
+        "204":
+          description: Deleted organization
+  "/organizations/{org}/workspaces/":
+    summary: Represents a list of Workspaces
+    description: This resource path represents a Workspace in the platform
+    parameters:
+      - name: org
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List workspace options
+      description: Returns the options for workspace
+      operationId: optionWorkspaceList
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: List of workspace options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all workspaces
+      description: Returns a list of all workspaces
+      operationId: listWorkspaces
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: List of all workspaces
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    post:
+      summary: Create an workspace
+      description: Creates and stores a new workspace
+      operationId: storeWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/WorkspaceRequest"
+      responses:
+        "201":
+          description: Stored a Workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+  "/organizations/{org}/workspaces/{id}/":
+    summary: Represents a list of Workspaces
+    description: This resource path represents a Workspace in the platform
+    parameters:
+      - name: org
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+      - name: id
+        in: path
+        description: ID of workspace
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an workspace options
+      description: Returns the options for workspace model
+      operationId: optionWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: List of an workspace options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an workspace
+      description: Returns the data of an workspace
+      operationId: getWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "200":
+          description: Data of an workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    patch:
+      summary: Update an workspace
+      description: Updates workspace data
+      operationId: updateWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/WorkspaceRequest"
+      responses:
+        "200":
+          description: Updated a Workspace
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+    delete:
+      summary: Delete an workspace
+      description: Deletes an workspace
+      operationId: deleteWorkspace
+      tags:
+        - workspaces
+      parameters: []
+      responses:
+        "204":
+          description: Deleted workspace
+  "/organizations/{org}/groups/":
+    summary: Represents a list of Groups
+    description: This resource path represents a Group in the platform
+    parameters:
+      - name: org
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List group options
+      description: Returns the options for group
+      operationId: optionGroupList
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: List of group options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all groups
+      description: Returns a list of all groups
+      operationId: listGroups
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: List of all groups
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    post:
+      summary: Create an group
+      description: Creates and stores a new group
+      operationId: storeGroup
+      tags:
+        - groups
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/GroupRequest"
+      responses:
+        "201":
+          description: Stored a Group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+  "/organizations/{org}/groups/{id}/":
+    summary: Represents a list of Groups
+    description: This resource path represents a Group in the platform
+    parameters:
+      - name: org
+        in: path
+        description: ID of organization
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+      - name: id
+        in: path
+        description: ID of group
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an group options
+      description: Returns the options for group model
+      operationId: optionGroup
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: List of an group options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an group
+      description: Returns the data of an group
+      operationId: getGroup
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "200":
+          description: Data of an group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    patch:
+      summary: Update an group
+      description: Updates group data
+      operationId: updateGroup
+      tags:
+        - groups
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/GroupRequest"
+      responses:
+        "200":
+          description: Updated a Group
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Group"
+    delete:
+      summary: Delete an group
+      description: Deletes an group
+      operationId: deleteGroup
+      tags:
+        - groups
+      parameters: []
+      responses:
+        "204":
+          description: Deleted group
+  "/channels/":
+    summary: Represents a list of Channels
+    description: This resource path represents a Channel in the platform
+    options:
+      summary: List channel options
+      description: Returns the options for channel
+      operationId: optionChannelList
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: List of channel options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all channels
+      description: Returns a list of all channels
+      operationId: listChannels
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: List of all channels
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+    post:
+      summary: Create an channel
+      description: Creates and stores a new channel
+      operationId: storeChannel
+      tags:
+        - channels
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/ChannelRequest"
+      responses:
+        "201":
+          description: Stored a Channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+  "/channels/{id}/":
+    summary: Represents a list of Channels
+    description: This resource path represents a Channel in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of channel
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an channel options
+      description: Returns the options for channel model
+      operationId: optionChannel
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: List of an channel options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an channel
+      description: Returns the data of an channel
+      operationId: getChannel
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "200":
+          description: Data of an channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+    put:
+      summary: Update an channel
+      description: Updates channel data
+      operationId: updateChannel
+      tags:
+        - channels
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/ChannelRequest"
+      responses:
+        "200":
+          description: Updated a Channel
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Channel"
+    delete:
+      summary: Delete an channel
+      description: Deletes an channel
+      operationId: deleteChannel
+      tags:
+        - channels
+      parameters: []
+      responses:
+        "204":
+          description: Deleted channel
+  "/messages/":
+    summary: Represents a list of Messages
+    description: This resource path represents a Message in the platform
+    options:
+      summary: List message options
+      description: Returns the options for message
+      operationId: optionMessageList
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: List of message options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all messages
+      description: Returns a list of all messages
+      operationId: listMessages
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: List of all messages
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    post:
+      summary: Create an message
+      description: Creates and stores a new message
+      operationId: storeMessage
+      tags:
+        - messages
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/MessageRequest"
+      responses:
+        "201":
+          description: Stored a Message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+  "/messages/{id}/":
+    summary: Represents a list of Messages
+    description: This resource path represents a Message in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of message
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an message options
+      description: Returns the options for message model
+      operationId: optionMessage
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: List of an message options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an message
+      description: Returns the data of an message
+      operationId: getMessage
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "200":
+          description: Data of an message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    put:
+      summary: Update an message
+      description: Updates message data
+      operationId: updateMessage
+      tags:
+        - messages
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/MessageRequest"
+      responses:
+        "200":
+          description: Updated a Message
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Message"
+    delete:
+      summary: Delete an message
+      description: Deletes an message
+      operationId: deleteMessage
+      tags:
+        - messages
+      parameters: []
+      responses:
+        "204":
+          description: Deleted message
+  "/attachments/":
+    summary: Represents a list of Attachments
+    description: This resource path represents an Attachment in the platform
+    options:
+      summary: List attachment options
+      description: Returns the options for attachment
+      operationId: optionAttachmentList
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: List of attachment options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/listOptionExample"
+    get:
+      summary: List all attachments
+      description: Returns a list of all attachments
+      operationId: listAttachments
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: List of all attachments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+    post:
+      summary: Create an attachment
+      description: Creates and stores a new attachment
+      operationId: storeAttachment
+      tags:
+        - attachments
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/AttachmentRequest"
+      responses:
+        "201":
+          description: Stored an Attachment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+  "/attachments/{id}/":
+    summary: Represents a list of Attachments
+    description: This resource path represents an Attachment in the platform
+    parameters:
+      - name: id
+        in: path
+        description: ID of attachment
+        required: true
+        schema:
+          type: integer
+          format: int64
+          example: 1
+    options:
+      summary: List an attachment options
+      description: Returns the options for attachment model
+      operationId: optionAttachment
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: List of an attachment options
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HTTPOption"
+              examples:
+                listOptionExample:
+                  $ref: "#/components/examples/modelOptionExample"
+    get:
+      summary: Get an attachment
+      description: Returns the data of an attachment
+      operationId: getAttachment
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "200":
+          description: Data of an attachment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+    put:
+      summary: Update an attachment
+      description: Updates attachment data
+      operationId: updateAttachment
+      tags:
+        - attachments
+      parameters: []
+      requestBody:
+        $ref: "#/components/requestBodies/AttachmentRequest"
+      responses:
+        "200":
+          description: Updated an Attachment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Attachment"
+    delete:
+      summary: Delete an attachment
+      description: Deletes an attachment
+      operationId: deleteAttachment
+      tags:
+        - attachments
+      parameters: []
+      responses:
+        "204":
+          description: Deleted attachment
+components:
+  schemas:
+    LoginToken:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+      example:
+        access: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+        refresh: 1etmk30an6vjjplcd1ou8mnjudub7qgj.refresh
+    RefreshToken:
+      type: object
+      properties:
+        access:
+          type: string
+        refresh:
+          type: string
+      example:
+        access: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+    LoginForm:
+      type: object
+      properties:
+        username:
+          type: string
+          example: admin
+        password:
+          type: string
+          example: secret_pass
+    RefreshForm:
+      type: object
+      properties:
+        refresh:
+          type: string
+          example: 1etmk30an6vjjplcd1ou8mnjudub7qgj.refresh
+    VerifyForm:
+      type: object
+      properties:
+        token:
+          type: string
+          example: 1etmk30an6vjjplcd1ou8mnjudub7qgj.access
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+      example:
+        id: 1
+        username: example
+        email: example@angelxehg.com
+    UserList:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+      example:
+        - id: 1
+          username: example
+          email: example@angelxehg.com
+        - id: 2
+          username: example_b
+          email: example_b@angelxehg.com
+        - id: 3
+          username: example_c
+          email: example_c@angelxehg.com
+    UserForm:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        re_password:
+          type: string
+      example:
+        username: example
+        email: example@angelxehg.com
+        password: my_secret_pass
+        re_password: my_secret_pass
+    Organization:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+      example:
+        id: 1
+        title: Nova Organization
+        description: We make Nova Software
+    OrganizationList:
+      type: array
+      items:
+        $ref: "#/components/schemas/Organization"
+      example:
+        - id: 1
+          title: Nova Organization
+          description: We make Nova Software
+        - id: 2
+          title: Alpha Organization
+          description: We make Alpha Software
+        - id: 3
+          title: Beta Organization
+          description: We make Beta Software
+    OrganizationForm:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Nova Organization
+        description:
+          type: string
+          example: We make Nova Software
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Workspace
+    WorkspaceForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Workspace
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Group
+    GroupForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Group
+    Channel:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Channel
+    ChannelForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Channel
+    Message:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Nova Message
+    MessageForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Nova Message
+    Attachment:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+      example:
+        id: 1
+        name: Novan Attachment
+    AttachmentForm:
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Novan Attachment
+    HTTPOption:
+      type: object
+      required:
+        - name
+        - description
+      properties:
+        name:
+          type: string
+          example: Option List
+        description:
+          type: string
+          example: Model view set
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+  requestBodies:
+    LoginRequest:
+      description: Request body for login
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/LoginForm"
+    RefreshRequest:
+      description: Request body for refresh
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/RefreshForm"
+    VerifyRequest:
+      description: Request body for verify
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/VerifyForm"
+    OrganizationRequest:
+      description: Request body for an organization
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/OrganizationForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/OrganizationForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/OrganizationForm"
+    UserRequest:
+      description: Request body for an user
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/UserForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/UserForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/UserForm"
+    WorkspaceRequest:
+      description: Request body for an workspace
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/WorkspaceForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/WorkspaceForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/WorkspaceForm"
+    GroupRequest:
+      description: Request body for an group
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GroupForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/GroupForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/GroupForm"
+    ChannelRequest:
+      description: Request body for an channel
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ChannelForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/ChannelForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/ChannelForm"
+    MessageRequest:
+      description: Request body for an message
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/MessageForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/MessageForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/MessageForm"
+    AttachmentRequest:
+      description: Request body for an attachment
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/AttachmentForm"
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: "#/components/schemas/AttachmentForm"
+        multipart/form-data:
+          schema:
+            $ref: "#/components/schemas/AttachmentForm"
+  examples:
+    listOptionExample:
+      summary: Example of List Options
+      value:
+        name: Model Viewset List
+        description: Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            name:
+              type: string
+              required: true
+              read_only: false
+              label: Name
+              max_length: 100
+    modelOptionExample:
+      summary: Example of Model Options
+      value:
+        name: Model Viewset Instance
+        description: Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          PUT:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            name:
+              type: string
+              required: true
+              read_only: false
+              label: Name
+              max_length: 100
+    UserOptionListExample:
+      summary: Example of User Option List
+      value:
+        name: User Viewset List
+        description: User Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            email:
+              type: string
+              required: true
+              read_only: false
+              label: Email
+              max_length: 50
+            username:
+              type: string
+              required: false
+              read_only: false
+              label: Username
+              max_length: 1000
+    OrganizationOptionListExample:
+      summary: Example of Organization Option List
+      value:
+        name: Organization Viewset List
+        description: Organization Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          POST:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            title:
+              type: string
+              required: true
+              read_only: false
+              label: Title
+              max_length: 50
+            description:
+              type: string
+              required: false
+              read_only: false
+              label: Description
+              max_length: 1000
+    OrganizationOptionExample:
+      summary: Example of Organization Option
+      value:
+        name: Organization Viewset Instance
+        description: Organization Model view set
+        renders:
+          - "application/json"
+          - "text/html"
+        parses:
+          - "application/json"
+          - "application/x-www-form-urlencoded"
+          - "multipart/form-data"
+        actions:
+          PUT:
+            id:
+              type: integer
+              required: false
+              read_only: true
+              label: ID
+            title:
+              type: string
+              required: true
+              read_only: false
+              label: Title
+              max_length: 50
+            description:
+              type: string
+              required: false
+              read_only: false
+              label: Description
+              max_length: 1000
+  links: {}
+  callbacks: {}
+security:
+  - bearerAuth: [] 
